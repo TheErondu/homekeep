@@ -12,25 +12,87 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.12.16/babel.min.js"></script>
 <style>
-  * { box-sizing: border-box; }
-  body { margin: 0; background: #081210; color: #e9f1ec; font-family: 'Hanken Grotesk', sans-serif; }
+  *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  body { margin: 0; background: #081210; color: #e9f1ec; font-family: 'Hanken Grotesk', sans-serif; -webkit-font-smoothing: antialiased; }
   ::-webkit-scrollbar { width: 0; height: 0; }
   input, textarea, button { font-family: inherit; }
-  @keyframes hkfloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-  @keyframes hkpulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,93,93,.45)} 50%{box-shadow:0 0 0 10px rgba(255,93,93,0)} }
-  @keyframes hktoast { from{opacity:0;transform:translate(-50%,12px)} to{opacity:1;transform:translate(-50%,0)} }
-  @keyframes hkglow { 0%,100%{opacity:.55} 50%{opacity:.9} }
-  @keyframes hkslide { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── Animations ── */
+  @keyframes hkfloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes hkpulse  { 0%,100%{box-shadow:0 0 0 0 rgba(255,93,93,.45)} 50%{box-shadow:0 0 0 10px rgba(255,93,93,0)} }
+  @keyframes hktoast  { from{opacity:0;transform:translate(-50%,10px)} to{opacity:1;transform:translate(-50%,0)} }
+  @keyframes hkglow   { 0%,100%{opacity:.5} 50%{opacity:.85} }
+  @keyframes hkslide  { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
   .hkpulse { animation: hkpulse 2.4s ease-in-out infinite; }
   .hkslide { animation: hkslide .3s ease; }
   .hktoast { animation: hktoast .25s ease; }
+
+  /* ── Layout helpers ── */
+  .wrap     { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  .sec-pad  { padding-top: 80px; padding-bottom: 40px; }
+  .sec-tag  { font-size: 13px; font-weight: 600; color: #34e08a; letter-spacing: .08em; margin-bottom: 10px; }
+
+  /* ── Hero ── */
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero-h1   { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(32px, 5vw, 56px); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 18px; }
+  .hero-phone { position: relative; display: flex; justify-content: center; }
+  .hero-phone-inner { animation: hkfloat 7s ease-in-out infinite; }
+  .store-badges { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* ── Nav ── */
+  .nav-links { display: flex; align-items: center; gap: 28px; font-size: 15px; color: #aebcb3; }
+
+  /* ── Stats ── */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+
+  /* ── Features ── */
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+  /* ── Why us ── */
+  .why-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: center; }
+
+  /* ── Contact ── */
+  .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; }
+  .contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+  /* ── Footer ── */
+  .footer-inner  { display: flex; justify-content: space-between; align-items: start; gap: 40px; flex-wrap: wrap; }
+  .footer-badges { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  /* ── Tablet ── */
+  @media (max-width: 900px) {
+    .hero-grid      { grid-template-columns: 1fr; gap: 0; }
+    .hero-phone     { order: -1; margin-bottom: 32px; }
+    .hero-phone-inner { transform: scale(0.78); transform-origin: center top; }
+    .stats-grid     { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .features-grid  { grid-template-columns: repeat(2, 1fr); }
+    .why-grid       { grid-template-columns: 1fr; gap: 28px; }
+    .contact-grid   { grid-template-columns: 1fr; gap: 28px; }
+    .wrap           { padding: 0 20px; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
+    .nav-links      { display: none; }
+    .features-grid  { grid-template-columns: 1fr; }
+    .stats-grid     { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .hero-phone-inner { transform: scale(0.68); transform-origin: center top; }
+    .store-badges   { flex-direction: column; gap: 10px; }
+    .footer-inner   { flex-direction: column; gap: 24px; }
+    .footer-badges  { flex-direction: column; align-items: flex-start; }
+    .contact-form-grid { grid-template-columns: 1fr; }
+    .sec-pad        { padding-top: 52px; }
+    .waitlist-row   { flex-direction: column; }
+    .waitlist-row input  { border-radius: 12px !important; }
+    .waitlist-row button { border-radius: 12px !important; width: 100%; }
+  }
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
+const { useState, useRef, useEffect, useCallback } = React;
 
 const G = '#34e08a';
 const CARD = '#13211a';
@@ -39,29 +101,28 @@ const DIM = '#8da093';
 const MUTED = '#9cb3a6';
 const BORDER = 'rgba(255,255,255,.07)';
 
-const Icon = ({ name, size = 22, color, fill = 0, style = {} }) => (
-  <span style={{ fontFamily:"'Material Symbols Rounded'", fontSize: size, color, fontVariationSettings:`'FILL' ${fill}`, lineHeight:1, userSelect:'none', flexShrink:0, ...style }}>{name}</span>
+const Icon = ({ name, size=22, color, fill=0, style={} }) => (
+  <span style={{ fontFamily:"'Material Symbols Rounded'", fontSize:size, color, fontVariationSettings:`'FILL' ${fill}`, lineHeight:1, userSelect:'none', flexShrink:0, ...style }}>{name}</span>
 );
 
-// ─── PHONE DEMO (Manager mini-app) ───────────────────────────────────────────
+// ─── PHONE DEMO ───────────────────────────────────────────────────────────────
 
 function PhoneDemo() {
   const [screen, setScreen] = useState('home');
-  const [inviteName, setInviteNameState] = useState('');
+  const [inviteName, setInviteName] = useState('');
   const [inviteType, setInviteType] = useState('single');
   const [invites, setInvites] = useState([
-    { name: 'Adebayo Group', type: 'multi', code: 'PK-7QX2', when: 'Today, 2:30 PM' },
-    { name: 'DHL Courier', type: 'single', code: 'PK-4MN8', when: 'Today, 11:05 AM' },
+    { name:'Adebayo Group', type:'multi', code:'PK-7QX2', when:'Today, 2:30 PM' },
+    { name:'DHL Courier', type:'single', code:'PK-4MN8', when:'Today, 11:05 AM' },
   ]);
   const [gate, setGate] = useState([
-    { id: 1, name: 'Chinedu Okafor', host: 'Block C · Flat 4', time: 'just now' },
-    { id: 2, name: 'Glovo Rider', host: 'Block A · Flat 12', time: '2 min ago' },
+    { id:1, name:'Chinedu Okafor', host:'Block C · Flat 4', time:'just now' },
+    { id:2, name:'Glovo Rider', host:'Block A · Flat 12', time:'2 min ago' },
   ]);
-  const [balance, setBalance] = useState(145000);
   const [paid, setPaid] = useState(false);
   const [complaints, setComplaints] = useState([
-    { id: 1, title: 'Street light out on Block B walkway', status: 'In progress', time: 'Yesterday' },
-    { id: 2, title: 'Refuse not collected on Crescent 2', status: 'Resolved', time: '2 days ago' },
+    { id:1, title:'Street light out on Block B walkway', status:'In progress', time:'Yesterday' },
+    { id:2, title:'Refuse not collected on Crescent 2', status:'Resolved', time:'2 days ago' },
   ]);
   const [complaintText, setComplaintText] = useState('');
   const [panicOpen, setPanicOpen] = useState(false);
@@ -72,94 +133,61 @@ function PhoneDemo() {
   const panicTimer = useRef(null);
 
   const go = s => { setScreen(s); setPanicOpen(false); };
-
   const flash = useCallback(msg => {
-    setToast(msg);
-    clearTimeout(toastTimer.current);
+    setToast(msg); clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToast(null), 2400);
   }, []);
-
   useEffect(() => () => { clearInterval(panicTimer.current); clearTimeout(toastTimer.current); }, []);
 
   const createInvite = () => {
     const name = inviteName.trim() || 'Guest';
-    const code = 'PK-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-    setInvites(prev => [{ name, type: inviteType, code, when: 'Just now' }, ...prev]);
-    setInviteNameState('');
-    flash('Invitation ' + code + ' created');
+    const code = 'PK-' + Math.random().toString(36).slice(2,6).toUpperCase();
+    setInvites(p => [{ name, type:inviteType, code, when:'Just now' }, ...p]);
+    setInviteName(''); flash('Invite ' + code + ' created');
   };
-
-  const allow = id => {
-    setGate(prev => prev.filter(g => g.id !== id));
-    flash('Visitor allowed in');
-  };
-  const deny = id => {
-    setGate(prev => prev.filter(g => g.id !== id));
-    flash('Visitor denied');
-  };
-
-  const payDues = () => { setBalance(0); setPaid(true); flash('Dues paid · ₦145,000'); };
-
+  const allow = id => { setGate(p => p.filter(g=>g.id!==id)); flash('Visitor allowed in'); };
+  const deny  = id => { setGate(p => p.filter(g=>g.id!==id)); flash('Visitor denied'); };
+  const payDues = () => { setPaid(true); flash('Dues paid · ₦145,000'); };
   const addComplaint = () => {
-    const t = complaintText.trim();
-    if (!t) return;
-    setComplaints(prev => [{ id: Date.now(), title: t, status: 'Open', time: 'Just now' }, ...prev]);
-    setComplaintText('');
-    flash('Complaint submitted');
+    const t = complaintText.trim(); if (!t) return;
+    setComplaints(p => [{ id:Date.now(), title:t, status:'Open', time:'Just now' }, ...p]);
+    setComplaintText(''); flash('Complaint submitted');
   };
-
   const startPanic = () => {
     if (panicState !== 'idle') return;
     setPanicState('arming');
-    panicTimer.current = setInterval(() => {
-      setPanicPct(prev => {
-        const p = Math.min(100, prev + 5);
-        if (p >= 100) { clearInterval(panicTimer.current); setPanicState('sent'); }
-        return p;
-      });
-    }, 32);
+    panicTimer.current = setInterval(() => setPanicPct(p => {
+      const n = Math.min(100, p+5);
+      if (n >= 100) { clearInterval(panicTimer.current); setPanicState('sent'); }
+      return n;
+    }), 32);
   };
-  const cancelPanic = () => { if (panicState === 'arming') { clearInterval(panicTimer.current); setPanicState('idle'); setPanicPct(0); } };
-  const closePanic = () => { clearInterval(panicTimer.current); setPanicOpen(false); setPanicState('idle'); setPanicPct(0); };
+  const cancelPanic = () => { if (panicState==='arming') { clearInterval(panicTimer.current); setPanicState('idle'); setPanicPct(0); } };
+  const closePanic  = () => { clearInterval(panicTimer.current); setPanicOpen(false); setPanicState('idle'); setPanicPct(0); };
 
   const nav = [
-    { key: 'home', label: 'Home', icon: 'home' },
-    { key: 'visitors', label: 'Visitors', icon: 'group' },
-    { key: 'gate', label: 'Gate', icon: 'shield' },
-    { key: 'dues', label: 'Dues', icon: 'account_balance_wallet' },
-    { key: 'issues', label: 'Issues', icon: 'forum' },
+    { key:'home', icon:'home' }, { key:'visitors', icon:'group' },
+    { key:'gate', icon:'shield' }, { key:'dues', icon:'account_balance_wallet' }, { key:'issues', icon:'forum' },
   ];
+  const stStatus = s => s==='Resolved' ? { c:G, bg:'rgba(52,224,138,.12)' } : s==='In progress' ? { c:'#ffb84d', bg:'rgba(255,184,77,.12)' } : { c:'#7fb4ff', bg:'rgba(127,180,255,.12)' };
+  const seg = on => on ? { border:'rgba(52,224,138,.4)', bg:'rgba(52,224,138,.14)', color:G } : { border:'rgba(255,255,255,.1)', bg:'transparent', color:MUTED };
+  const s1 = seg(inviteType==='single'), s2 = seg(inviteType==='multi');
+  const panicSent = panicState==='sent';
+  const gateLog = [{ name:'Mrs. Bello', dir:'in', t:'1:12 PM' }, { name:'Uche (Flat 9)', dir:'out', t:'12:55 PM' }, { name:'Water vendor', dir:'in', t:'12:30 PM' }];
 
-  const stStatus = s => s === 'Resolved' ? { color: G, bg: 'rgba(52,224,138,.12)' }
-    : s === 'In progress' ? { color: '#ffb84d', bg: 'rgba(255,184,77,.12)' }
-    : { color: '#7fb4ff', bg: 'rgba(127,180,255,.12)' };
-
-  const seg = on => on
-    ? { border: 'rgba(52,224,138,.4)', bg: 'rgba(52,224,138,.14)', color: G }
-    : { border: 'rgba(255,255,255,.1)', bg: 'transparent', color: MUTED };
-  const s1 = seg(inviteType === 'single'), s2 = seg(inviteType === 'multi');
-
-  const panicSent = panicState === 'sent';
-  const gateLog = [
-    { name: 'Mrs. Bello', dir: 'in', time: '1:12 PM' },
-    { name: 'Uche (Flat 9)', dir: 'out', time: '12:55 PM' },
-    { name: 'Water vendor', dir: 'in', time: '12:30 PM' },
-  ];
+  const phoneStyle = { position:'relative', width:318, height:646, background:'#05100b', border:'2px solid #1e2c24', borderRadius:48, padding:11, boxShadow:'0 40px 80px -30px rgba(0,0,0,.75), inset 0 0 0 1px rgba(255,255,255,.03)' };
+  const innerStyle = { position:'relative', width:'100%', height:'100%', background:'#0a1611', borderRadius:38, overflow:'hidden', display:'flex', flexDirection:'column' };
 
   return (
-    <div style={{ position:'relative', width:318, height:646, background:'#05100b', border:'2px solid #1e2c24', borderRadius:48, padding:11, boxShadow:'0 40px 90px -30px rgba(0,0,0,.8), inset 0 0 0 1px rgba(255,255,255,.03)', animation:'hkfloat 7s ease-in-out infinite' }}>
-      <div style={{ position:'relative', width:'100%', height:'100%', background:'#0a1611', borderRadius:38, overflow:'hidden', display:'flex', flexDirection:'column' }}>
+    <div style={phoneStyle}>
+      <div style={innerStyle}>
         {/* Status bar */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px 8px', fontSize:13, fontWeight:600, color:'#cfe0d6', flexShrink:0 }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px 6px', fontSize:13, fontWeight:600, color:'#cfe0d6', flexShrink:0 }}>
           <span>9:41</span>
-          <div style={{ display:'flex', gap:5 }}>
-            <Icon name="signal_cellular_alt" size={16} />
-            <Icon name="wifi" size={16} />
-            <Icon name="battery_full" size={16} />
-          </div>
+          <div style={{ display:'flex', gap:5 }}><Icon name="signal_cellular_alt" size={16} /><Icon name="wifi" size={16} /><Icon name="battery_full" size={16} /></div>
         </div>
         {/* Header */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'6px 18px 12px', flexShrink:0 }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'4px 18px 10px', flexShrink:0 }}>
           <div>
             <div style={{ fontSize:12, color:'#7f968a', fontWeight:500 }}>Parkview Estate</div>
             <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600 }}>Good evening, Manager</div>
@@ -170,169 +198,137 @@ function PhoneDemo() {
           </div>
         </div>
 
-        {/* Screen content */}
-        <div style={{ flex:1, overflowY:'auto', padding:'4px 18px 96px' }}>
+        {/* Content */}
+        <div style={{ flex:1, overflowY:'auto', padding:'4px 18px 86px' }}>
 
-          {/* HOME */}
-          {screen === 'home' && <div className="hkslide">
-            <div style={{ background:'linear-gradient(150deg,#123a28,#0d2a1d)', border:'1px solid rgba(52,224,138,.2)', borderRadius:18, padding:16, marginBottom:16 }}>
-              <div style={{ fontSize:12, color:'#8fd9b3', fontWeight:500, marginBottom:12 }}>TODAY AT A GLANCE</div>
+          {screen==='home' && <div className="hkslide">
+            <div style={{ background:'linear-gradient(150deg,#123a28,#0d2a1d)', border:'1px solid rgba(52,224,138,.2)', borderRadius:18, padding:14, marginBottom:14 }}>
+              <div style={{ fontSize:11, color:'#8fd9b3', fontWeight:500, marginBottom:10 }}>TODAY AT A GLANCE</div>
               <div style={{ display:'flex', justifyContent:'space-between', textAlign:'center' }}>
-                <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:24, fontWeight:700 }}>14</div><div style={{ fontSize:11, color:MUTED }}>Visitors</div></div>
+                <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:22, fontWeight:700 }}>14</div><div style={{ fontSize:10, color:MUTED }}>Visitors</div></div>
                 <div style={{ width:1, background:'rgba(255,255,255,.1)' }} />
-                <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:24, fontWeight:700, color:G }}>{gate.length}</div><div style={{ fontSize:11, color:MUTED }}>At gate</div></div>
+                <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:22, fontWeight:700, color:G }}>{gate.length}</div><div style={{ fontSize:10, color:MUTED }}>At gate</div></div>
                 <div style={{ width:1, background:'rgba(255,255,255,.1)' }} />
-                <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:24, fontWeight:700, color:'#ffb84d' }}>{complaints.filter(c=>c.status!=='Resolved').length}</div><div style={{ fontSize:11, color:MUTED }}>Open issues</div></div>
+                <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:22, fontWeight:700, color:'#ffb84d' }}>{complaints.filter(c=>c.status!=='Resolved').length}</div><div style={{ fontSize:10, color:MUTED }}>Open issues</div></div>
               </div>
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:18 }}>
-              {[
-                { icon:'qr_code_2', label:'New invite', onClick:()=>go('visitors'), danger:false },
-                { icon:'account_balance_wallet', label:'Pay dues', onClick:()=>go('dues'), danger:false },
-                { icon:'forum', label:'Log issue', onClick:()=>go('issues'), danger:false },
-                { icon:'sos', label:'Panic alert', onClick:()=>setPanicOpen(true), danger:true },
-              ].map(item => (
-                <button key={item.label} onClick={item.onClick} className={item.danger ? 'hkpulse' : ''} style={{ textAlign:'left', background: item.danger ? '#2a1414' : CARD, border:`1px solid ${item.danger ? 'rgba(255,93,93,.3)' : BORDER}`, borderRadius:14, padding:13, cursor:'pointer', color: item.danger ? '#ffd5d5' : '#e9f1ec' }}>
-                  <Icon name={item.icon} size={24} color={item.danger ? '#ff5d5d' : G} />
-                  <div style={{ fontSize:13, fontWeight:600, marginTop:8 }}>{item.label}</div>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:9, marginBottom:14 }}>
+              {[{icon:'qr_code_2',label:'New invite',s:'visitors',d:false},{icon:'account_balance_wallet',label:'Pay dues',s:'dues',d:false},{icon:'forum',label:'Log issue',s:'issues',d:false},{icon:'sos',label:'Panic alert',s:'panic',d:true}].map(item => (
+                <button key={item.label} onClick={()=>item.s==='panic'?setPanicOpen(true):go(item.s)} className={item.d?'hkpulse':''} style={{ textAlign:'left', background:item.d?'#2a1414':CARD, border:`1px solid ${item.d?'rgba(255,93,93,.3)':BORDER}`, borderRadius:13, padding:11, cursor:'pointer', color:item.d?'#ffd5d5':'#e9f1ec' }}>
+                  <Icon name={item.icon} size={22} color={item.d?'#ff5d5d':G} />
+                  <div style={{ fontSize:12, fontWeight:600, marginTop:7 }}>{item.label}</div>
                 </button>
               ))}
             </div>
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:9 }}>
-              <span style={{ fontSize:13, fontWeight:600 }}>Live at the gate</span>
-              <span onClick={()=>go('gate')} style={{ fontSize:12, color:G, cursor:'pointer' }}>View all</span>
-            </div>
-            {gate.length > 0 ? (
-              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:13, marginBottom:18 }}>
-                <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:11 }}>
-                  <div style={{ width:34, height:34, borderRadius:10, background:'#1e3327', display:'grid', placeItems:'center' }}><Icon name="person" size={19} color={MUTED} /></div>
-                  <div style={{ flex:1 }}>
-                    <div style={{ fontSize:13, fontWeight:600 }}>{gate[0].name}</div>
-                    <div style={{ fontSize:11, color:DIM }}>{gate[0].host} · {gate[0].time}</div>
-                  </div>
-                  <span style={{ fontSize:10, fontWeight:600, color:'#ffb84d', background:'rgba(255,184,77,.12)', padding:'3px 7px', borderRadius:6 }}>PENDING</span>
+            {gate.length > 0 && (
+              <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:13, padding:12, marginBottom:14 }}>
+                <div style={{ display:'flex', justifyContent:'space-between', marginBottom:9 }}><span style={{ fontSize:12, fontWeight:600 }}>Live at gate</span><span onClick={()=>go('gate')} style={{ fontSize:11, color:G, cursor:'pointer' }}>View all</span></div>
+                <div style={{ display:'flex', alignItems:'center', gap:9, marginBottom:9 }}>
+                  <div style={{ width:32, height:32, borderRadius:9, background:'#1e3327', display:'grid', placeItems:'center' }}><Icon name="person" size={18} color={MUTED} /></div>
+                  <div style={{ flex:1 }}><div style={{ fontSize:12, fontWeight:600 }}>{gate[0].name}</div><div style={{ fontSize:10, color:DIM }}>{gate[0].host}</div></div>
+                  <span style={{ fontSize:9, fontWeight:700, color:'#ffb84d', background:'rgba(255,184,77,.12)', padding:'2px 6px', borderRadius:5 }}>PENDING</span>
                 </div>
-                <div style={{ display:'flex', gap:8 }}>
-                  <button onClick={()=>allow(gate[0].id)} style={{ flex:1, background:G, color:'#06140d', border:'none', borderRadius:10, padding:9, fontWeight:600, fontSize:13, cursor:'pointer' }}>Allow in</button>
-                  <button onClick={()=>deny(gate[0].id)} style={{ flex:1, background:'transparent', color:'#ff8a8a', border:'1px solid rgba(255,93,93,.3)', borderRadius:10, padding:9, fontWeight:600, fontSize:13, cursor:'pointer' }}>Deny</button>
+                <div style={{ display:'flex', gap:7 }}>
+                  <button onClick={()=>allow(gate[0].id)} style={{ flex:1, background:G, color:'#06140d', border:'none', borderRadius:9, padding:8, fontWeight:600, fontSize:12, cursor:'pointer' }}>Allow in</button>
+                  <button onClick={()=>deny(gate[0].id)} style={{ flex:1, background:'transparent', color:'#ff8a8a', border:'1px solid rgba(255,93,93,.3)', borderRadius:9, padding:8, fontWeight:600, fontSize:12, cursor:'pointer' }}>Deny</button>
                 </div>
               </div>
-            ) : (
-              <div style={{ background:CARD, border:'1px dashed rgba(255,255,255,.1)', borderRadius:14, padding:18, textAlign:'center', marginBottom:18, color:DIM, fontSize:13 }}>Gate is clear. No one waiting.</div>
             )}
-            <div style={{ fontSize:13, fontWeight:600, marginBottom:9 }}>Recent activity</div>
-            {[{ icon:'login', text:'Mrs. Bello entered', sub:'Main gate · 1:12 PM' }, { icon:'payments', text:'Dues paid by Flat 12', sub:'₦45,000 · 12:40 PM' }, { icon:'qr_code_2', text:'Invite code used', sub:'DHL Courier · 11:05 AM' }].map((a,i) => (
-              <div key={i} style={{ display:'flex', alignItems:'center', gap:11, padding:'9px 0', borderBottom:'1px solid rgba(255,255,255,.05)' }}>
-                <div style={{ width:32, height:32, borderRadius:9, background:'#16271e', display:'grid', placeItems:'center' }}><Icon name={a.icon} size={18} color="#7ff0b6" /></div>
-                <div style={{ flex:1 }}><div style={{ fontSize:13 }}>{a.text}</div><div style={{ fontSize:11, color:DIM }}>{a.sub}</div></div>
+            <div style={{ fontSize:12, fontWeight:600, marginBottom:8 }}>Recent activity</div>
+            {[{icon:'login',text:'Mrs. Bello entered',sub:'Main gate · 1:12 PM'},{icon:'payments',text:'Dues paid — Flat 12',sub:'₦45,000 · 12:40 PM'},{icon:'qr_code_2',text:'Invite code used',sub:'DHL Courier · 11:05 AM'}].map((a,i) => (
+              <div key={i} style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 0', borderBottom:'1px solid rgba(255,255,255,.05)' }}>
+                <div style={{ width:30, height:30, borderRadius:8, background:'#16271e', display:'grid', placeItems:'center' }}><Icon name={a.icon} size={16} color="#7ff0b6" /></div>
+                <div style={{ flex:1 }}><div style={{ fontSize:12 }}>{a.text}</div><div style={{ fontSize:10, color:DIM }}>{a.sub}</div></div>
               </div>
             ))}
           </div>}
 
-          {/* VISITORS */}
-          {screen === 'visitors' && <div className="hkslide">
-            <div style={{ fontFamily:"'Space Grotesk'", fontSize:20, fontWeight:600, margin:'2px 0 14px' }}>Invitations</div>
-            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:16, padding:14, marginBottom:18 }}>
-              <div style={{ fontSize:12, color:DIM, marginBottom:8 }}>Guest or vendor name</div>
-              <input value={inviteName} onChange={e=>setInviteNameState(e.target.value)} placeholder="e.g. Adebayo Group" style={{ width:'100%', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:11, color:'#e9f1ec', fontSize:14, outline:'none', marginBottom:12 }} />
-              <div style={{ display:'flex', gap:8, marginBottom:14 }}>
-                {[{l:'Single use',s:s1,f:()=>setInviteType('single')},{l:'Multi use',s:s2,f:()=>setInviteType('multi')}].map(item => (
-                  <button key={item.l} onClick={item.f} style={{ flex:1, padding:9, borderRadius:9, cursor:'pointer', fontSize:12, fontWeight:600, border:`1px solid ${item.s.border}`, background:item.s.bg, color:item.s.color }}>{item.l}</button>
+          {screen==='visitors' && <div className="hkslide">
+            <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600, margin:'2px 0 12px' }}>Invitations</div>
+            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:13, marginBottom:14 }}>
+              <input value={inviteName} onChange={e=>setInviteName(e.target.value)} placeholder="Guest or vendor name" style={{ width:'100%', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:9, padding:10, color:'#e9f1ec', fontSize:13, outline:'none', marginBottom:10 }} />
+              <div style={{ display:'flex', gap:7, marginBottom:12 }}>
+                {[{l:'Single use',s:s1,f:'single'},{l:'Multi use',s:s2,f:'multi'}].map(sg => (
+                  <button key={sg.f} onClick={()=>setInviteType(sg.f)} style={{ flex:1, padding:8, borderRadius:8, cursor:'pointer', fontSize:11, fontWeight:600, border:`1px solid ${sg.s.border}`, background:sg.s.bg, color:sg.s.color }}>{sg.l}</button>
                 ))}
               </div>
-              <button onClick={createInvite} style={{ width:'100%', background:G, color:'#06140d', border:'none', borderRadius:11, padding:12, fontWeight:600, fontSize:14, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:7 }}>
-                <Icon name="qr_code_2" size={19} color="#06140d" /> Generate code
+              <button onClick={createInvite} style={{ width:'100%', background:G, color:'#06140d', border:'none', borderRadius:10, padding:11, fontWeight:600, fontSize:13, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:6 }}>
+                <Icon name="qr_code_2" size={17} color="#06140d" /> Generate code
               </button>
             </div>
-            <div style={{ fontSize:13, fontWeight:600, marginBottom:9 }}>Active invitations</div>
             {invites.map((iv,i) => (
-              <div key={i} style={{ display:'flex', alignItems:'center', gap:11, background:CARD, border:'1px solid rgba(255,255,255,.06)', borderRadius:13, padding:12, marginBottom:9 }}>
-                <div style={{ width:36, height:36, borderRadius:10, background:'#1e3327', display:'grid', placeItems:'center' }}><Icon name="confirmation_number" size={19} color="#7ff0b6" /></div>
-                <div style={{ flex:1 }}><div style={{ fontSize:13, fontWeight:600 }}>{iv.name}</div><div style={{ fontSize:11, color:DIM }}>{iv.type === 'multi' ? 'Multi-use' : 'Single-use'} · {iv.when}</div></div>
-                <span style={{ fontFamily:"'Space Grotesk'", fontSize:13, fontWeight:600, color:G, letterSpacing:'.04em' }}>{iv.code}</span>
+              <div key={i} style={{ display:'flex', alignItems:'center', gap:10, background:CARD, border:'1px solid rgba(255,255,255,.06)', borderRadius:12, padding:11, marginBottom:8 }}>
+                <div style={{ width:34, height:34, borderRadius:9, background:'#1e3327', display:'grid', placeItems:'center' }}><Icon name="confirmation_number" size={18} color="#7ff0b6" /></div>
+                <div style={{ flex:1 }}><div style={{ fontSize:12, fontWeight:600 }}>{iv.name}</div><div style={{ fontSize:10, color:DIM }}>{iv.type==='multi'?'Multi-use':'Single-use'} · {iv.when}</div></div>
+                <span style={{ fontFamily:"'Space Grotesk'", fontSize:12, fontWeight:700, color:G, letterSpacing:'.04em' }}>{iv.code}</span>
               </div>
             ))}
           </div>}
 
-          {/* GATE */}
-          {screen === 'gate' && <div className="hkslide">
-            <div style={{ fontFamily:"'Space Grotesk'", fontSize:20, fontWeight:600, margin:'2px 0 4px' }}>Gate control</div>
-            <div style={{ fontSize:12, color:DIM, marginBottom:14, display:'flex', alignItems:'center', gap:6 }}>
-              <span style={{ width:7, height:7, borderRadius:'50%', background:G, display:'inline-block' }} />Main Entrance · live
+          {screen==='gate' && <div className="hkslide">
+            <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600, margin:'2px 0 4px' }}>Gate control</div>
+            <div style={{ fontSize:11, color:DIM, marginBottom:12, display:'flex', alignItems:'center', gap:5 }}>
+              <span style={{ width:6, height:6, borderRadius:'50%', background:G, display:'inline-block' }} />Main Entrance · live
             </div>
-            <div style={{ fontSize:13, fontWeight:600, marginBottom:9 }}>Waiting for approval</div>
             {gate.length > 0 ? gate.map(g => (
-              <div key={g.id} style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:13, marginBottom:10 }}>
-                <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:11 }}>
-                  <div style={{ width:34, height:34, borderRadius:10, background:'#1e3327', display:'grid', placeItems:'center' }}><Icon name="person" size={19} color={MUTED} /></div>
-                  <div style={{ flex:1 }}><div style={{ fontSize:13, fontWeight:600 }}>{g.name}</div><div style={{ fontSize:11, color:DIM }}>{g.host} · {g.time}</div></div>
+              <div key={g.id} style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:13, padding:12, marginBottom:9 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:9, marginBottom:10 }}>
+                  <div style={{ width:32, height:32, borderRadius:9, background:'#1e3327', display:'grid', placeItems:'center' }}><Icon name="person" size={18} color={MUTED} /></div>
+                  <div style={{ flex:1 }}><div style={{ fontSize:12, fontWeight:600 }}>{g.name}</div><div style={{ fontSize:10, color:DIM }}>{g.host} · {g.time}</div></div>
                 </div>
-                <div style={{ display:'flex', gap:8 }}>
-                  <button onClick={()=>allow(g.id)} style={{ flex:1, background:G, color:'#06140d', border:'none', borderRadius:10, padding:9, fontWeight:600, fontSize:13, cursor:'pointer' }}>Allow in</button>
-                  <button onClick={()=>deny(g.id)} style={{ flex:1, background:'transparent', color:'#ff8a8a', border:'1px solid rgba(255,93,93,.3)', borderRadius:10, padding:9, fontWeight:600, fontSize:13, cursor:'pointer' }}>Deny</button>
+                <div style={{ display:'flex', gap:7 }}>
+                  <button onClick={()=>allow(g.id)} style={{ flex:1, background:G, color:'#06140d', border:'none', borderRadius:9, padding:8, fontWeight:600, fontSize:12, cursor:'pointer' }}>Allow in</button>
+                  <button onClick={()=>deny(g.id)} style={{ flex:1, background:'transparent', color:'#ff8a8a', border:'1px solid rgba(255,93,93,.3)', borderRadius:9, padding:8, fontWeight:600, fontSize:12, cursor:'pointer' }}>Deny</button>
                 </div>
               </div>
-            )) : (
-              <div style={{ background:CARD, border:'1px dashed rgba(255,255,255,.1)', borderRadius:14, padding:18, textAlign:'center', marginBottom:8, color:DIM, fontSize:13 }}>All clear. No one waiting at the gate.</div>
-            )}
-            <div style={{ fontSize:13, fontWeight:600, margin:'16px 0 9px' }}>Access log</div>
-            {gateLog.map((l,i) => {
-              const isIn = l.dir === 'in';
-              return (
-                <div key={i} style={{ display:'flex', alignItems:'center', gap:11, padding:'9px 0', borderBottom:'1px solid rgba(255,255,255,.05)' }}>
-                  <div style={{ width:30, height:30, borderRadius:9, background: isIn ? '#16271e' : '#1a2520', display:'grid', placeItems:'center' }}>
-                    <Icon name={isIn ? 'login' : 'logout'} size={17} color={isIn ? '#7ff0b6' : MUTED} />
-                  </div>
-                  <div style={{ flex:1 }}><div style={{ fontSize:13 }}>{l.name}</div><div style={{ fontSize:11, color:DIM }}>{isIn ? 'Entered' : 'Exited'} · Main gate</div></div>
-                  <span style={{ fontSize:11, color:DIM }}>{l.time}</span>
-                </div>
-              );
-            })}
+            )) : <div style={{ background:CARD, border:'1px dashed rgba(255,255,255,.1)', borderRadius:13, padding:16, textAlign:'center', color:DIM, fontSize:12 }}>Gate is clear.</div>}
+            <div style={{ fontSize:12, fontWeight:600, margin:'14px 0 8px' }}>Access log</div>
+            {gateLog.map((l,i) => (
+              <div key={i} style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 0', borderBottom:'1px solid rgba(255,255,255,.05)' }}>
+                <div style={{ width:28, height:28, borderRadius:8, background:l.dir==='in'?'#16271e':'#1a2520', display:'grid', placeItems:'center' }}><Icon name={l.dir==='in'?'login':'logout'} size={16} color={l.dir==='in'?'#7ff0b6':MUTED} /></div>
+                <div style={{ flex:1 }}><div style={{ fontSize:12 }}>{l.name}</div><div style={{ fontSize:10, color:DIM }}>{l.dir==='in'?'Entered':'Exited'}</div></div>
+                <span style={{ fontSize:10, color:DIM }}>{l.t}</span>
+              </div>
+            ))}
           </div>}
 
-          {/* DUES */}
-          {screen === 'dues' && <div className="hkslide">
-            <div style={{ fontFamily:"'Space Grotesk'", fontSize:20, fontWeight:600, margin:'2px 0 14px' }}>Facility dues</div>
+          {screen==='dues' && <div className="hkslide">
+            <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600, margin:'2px 0 12px' }}>Facility dues</div>
             {!paid ? (
-              <div style={{ background:'linear-gradient(150deg,#123a28,#0d2a1d)', border:'1px solid rgba(52,224,138,.2)', borderRadius:18, padding:18, marginBottom:16 }}>
-                <div style={{ fontSize:12, color:'#8fd9b3', marginBottom:6 }}>OUTSTANDING BALANCE</div>
-                <div style={{ fontFamily:"'Space Grotesk'", fontSize:34, fontWeight:700 }}>₦{balance.toLocaleString()}</div>
-                <div style={{ fontSize:12, color:MUTED, marginBottom:16 }}>Due 30 June 2026</div>
-                <button onClick={payDues} style={{ width:'100%', background:G, color:'#06140d', border:'none', borderRadius:11, padding:13, fontWeight:600, fontSize:14, cursor:'pointer' }}>Pay now</button>
+              <div style={{ background:'linear-gradient(150deg,#123a28,#0d2a1d)', border:'1px solid rgba(52,224,138,.2)', borderRadius:16, padding:16, marginBottom:14 }}>
+                <div style={{ fontSize:11, color:'#8fd9b3', marginBottom:4 }}>OUTSTANDING BALANCE</div>
+                <div style={{ fontFamily:"'Space Grotesk'", fontSize:32, fontWeight:700 }}>₦145,000</div>
+                <div style={{ fontSize:11, color:MUTED, marginBottom:14 }}>Due 30 June 2026</div>
+                <button onClick={payDues} style={{ width:'100%', background:G, color:'#06140d', border:'none', borderRadius:10, padding:12, fontWeight:600, fontSize:13, cursor:'pointer' }}>Pay now</button>
               </div>
             ) : (
-              <div style={{ background:'#123a28', border:'1px solid rgba(52,224,138,.3)', borderRadius:18, padding:'24px 18px', marginBottom:16, textAlign:'center' }}>
-                <div style={{ width:54, height:54, borderRadius:'50%', background:G, display:'grid', placeItems:'center', margin:'0 auto 12px' }}><Icon name="check" size={30} color="#06140d" /></div>
-                <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600 }}>Dues fully paid</div>
-                <div style={{ fontSize:12, color:MUTED, marginTop:4 }}>Receipt sent to your email</div>
+              <div style={{ background:'#123a28', border:'1px solid rgba(52,224,138,.3)', borderRadius:16, padding:'20px 16px', marginBottom:14, textAlign:'center' }}>
+                <div style={{ width:48, height:48, borderRadius:'50%', background:G, display:'grid', placeItems:'center', margin:'0 auto 10px' }}><Icon name="check" size={26} color="#06140d" /></div>
+                <div style={{ fontFamily:"'Space Grotesk'", fontSize:16, fontWeight:600 }}>Dues paid</div>
               </div>
             )}
-            <div style={{ fontSize:13, fontWeight:600, marginBottom:9 }}>Breakdown</div>
-            {[['Security levy','₦60,000'],['Waste management','₦25,000'],['Estate maintenance','₦45,000'],['Generator diesel','₦15,000']].map(([label,amt],i) => (
-              <div key={i} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'11px 0', borderBottom:'1px solid rgba(255,255,255,.05)' }}>
-                <span style={{ fontSize:13, color:'#cfe0d6' }}>{label}</span>
-                <span style={{ fontSize:13, fontWeight:600 }}>{amt}</span>
+            {[['Security levy','₦60,000'],['Waste management','₦25,000'],['Estate maintenance','₦45,000'],['Generator diesel','₦15,000']].map(([l,a],i) => (
+              <div key={i} style={{ display:'flex', justifyContent:'space-between', padding:'10px 0', borderBottom:'1px solid rgba(255,255,255,.05)', fontSize:12 }}>
+                <span style={{ color:'#cfe0d6' }}>{l}</span><span style={{ fontWeight:600 }}>{a}</span>
               </div>
             ))}
           </div>}
 
-          {/* ISSUES */}
-          {screen === 'issues' && <div className="hkslide">
-            <div style={{ fontFamily:"'Space Grotesk'", fontSize:20, fontWeight:600, margin:'2px 0 14px' }}>Complaints</div>
-            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:16, padding:14, marginBottom:18 }}>
-              <div style={{ fontSize:12, color:DIM, marginBottom:8 }}>Describe the issue</div>
-              <textarea value={complaintText} onChange={e=>setComplaintText(e.target.value)} placeholder="e.g. Street light out on Block B walkway" style={{ width:'100%', height:74, resize:'none', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:11, color:'#e9f1ec', fontSize:14, outline:'none', marginBottom:12 }} />
-              <button onClick={addComplaint} style={{ width:'100%', background:G, color:'#06140d', border:'none', borderRadius:11, padding:12, fontWeight:600, fontSize:14, cursor:'pointer' }}>Submit complaint</button>
+          {screen==='issues' && <div className="hkslide">
+            <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600, margin:'2px 0 12px' }}>Complaints</div>
+            <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:13, marginBottom:14 }}>
+              <textarea value={complaintText} onChange={e=>setComplaintText(e.target.value)} placeholder="Describe the issue…" style={{ width:'100%', height:64, resize:'none', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:9, padding:10, color:'#e9f1ec', fontSize:12, outline:'none', marginBottom:10 }} />
+              <button onClick={addComplaint} style={{ width:'100%', background:G, color:'#06140d', border:'none', borderRadius:10, padding:11, fontWeight:600, fontSize:13, cursor:'pointer' }}>Submit complaint</button>
             </div>
             {complaints.map(c => {
               const st = stStatus(c.status);
               return (
-                <div key={c.id} style={{ background:CARD, border:'1px solid rgba(255,255,255,.06)', borderRadius:13, padding:13, marginBottom:9 }}>
-                  <div style={{ display:'flex', alignItems:'start', justifyContent:'space-between', gap:10 }}>
-                    <div style={{ fontSize:13, fontWeight:500, flex:1 }}>{c.title}</div>
-                    <span style={{ fontSize:10, fontWeight:600, color:st.color, background:st.bg, padding:'3px 8px', borderRadius:6, whiteSpace:'nowrap' }}>{c.status}</span>
+                <div key={c.id} style={{ background:CARD, border:'1px solid rgba(255,255,255,.06)', borderRadius:12, padding:12, marginBottom:8 }}>
+                  <div style={{ display:'flex', alignItems:'start', justifyContent:'space-between', gap:9 }}>
+                    <div style={{ fontSize:12, fontWeight:500, flex:1 }}>{c.title}</div>
+                    <span style={{ fontSize:9, fontWeight:700, color:st.c, background:st.bg, padding:'2px 7px', borderRadius:5, whiteSpace:'nowrap' }}>{c.status}</span>
                   </div>
-                  <div style={{ fontSize:11, color:DIM, marginTop:6 }}>{c.time}</div>
+                  <div style={{ fontSize:10, color:DIM, marginTop:5 }}>{c.time}</div>
                 </div>
               );
             })}
@@ -340,11 +336,11 @@ function PhoneDemo() {
         </div>
 
         {/* Bottom nav */}
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, display:'flex', justifyContent:'space-around', padding:'9px 8px 14px', background:'rgba(8,18,14,.92)', backdropFilter:'blur(10px)', borderTop:'1px solid rgba(255,255,255,.06)' }}>
+        <div style={{ position:'absolute', bottom:0, left:0, right:0, display:'flex', justifyContent:'space-around', padding:'8px 6px 13px', background:'rgba(8,18,14,.92)', backdropFilter:'blur(10px)', borderTop:'1px solid rgba(255,255,255,.06)' }}>
           {nav.map(n => (
-            <button key={n.key} onClick={()=>go(n.key)} style={{ background:'none', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:3, color: screen === n.key ? G : '#6f8579', fontFamily:'inherit', padding:'2px 6px', flex:1 }}>
-              <Icon name={n.icon} size={23} fill={screen === n.key ? 1 : 0} />
-              <span style={{ fontSize:10, fontWeight:500 }}>{n.label}</span>
+            <button key={n.key} onClick={()=>go(n.key)} style={{ background:'none', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:2, color:screen===n.key?G:'#6f8579', fontFamily:'inherit', padding:'2px 0', flex:1 }}>
+              <Icon name={n.icon} size={22} fill={screen===n.key?1:0} />
+              <span style={{ fontSize:9, fontWeight:500, textTransform:'capitalize' }}>{n.key}</span>
             </button>
           ))}
         </div>
@@ -352,19 +348,16 @@ function PhoneDemo() {
         {/* Panic overlay */}
         {panicOpen && (
           <div style={{ position:'absolute', inset:0, background:'rgba(6,12,9,.92)', backdropFilter:'blur(6px)', zIndex:20, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24, textAlign:'center' }}>
-            <button onClick={closePanic} style={{ position:'absolute', top:16, right:16, background:'#16271e', border:'1px solid rgba(255,255,255,.1)', width:34, height:34, borderRadius:'50%', cursor:'pointer', color:'#aebcb3', display:'grid', placeItems:'center' }}>
+            <button onClick={closePanic} style={{ position:'absolute', top:16, right:16, background:'#16271e', border:'1px solid rgba(255,255,255,.1)', width:34, height:34, borderRadius:'50%', cursor:'pointer', color:MUTED, display:'grid', placeItems:'center' }}>
               <Icon name="close" size={20} />
             </button>
-            <div style={{ fontFamily:"'Space Grotesk'", fontSize:21, fontWeight:600, marginBottom:6 }}>{panicSent ? 'Security alerted' : 'Emergency alert'}</div>
-            <div style={{ fontSize:13, color:'#aebcb3', marginBottom:30, maxWidth:220 }}>{panicSent ? 'Officers have been notified and are on their way.' : 'Press and hold to alert estate security.'}</div>
-            <div
-              onMouseDown={startPanic} onMouseUp={cancelPanic} onMouseLeave={cancelPanic}
-              onTouchStart={startPanic} onTouchEnd={cancelPanic}
-              style={{ width:188, height:188, borderRadius:'50%', cursor: panicSent ? 'default' : 'pointer', userSelect:'none', background:`conic-gradient(${panicSent ? G : '#ff5d5d'} ${panicPct * 3.6}deg, rgba(255,93,93,.15) 0deg)`, display:'grid', placeItems:'center' }}
-            >
-              <div style={{ width:152, height:152, borderRadius:'50%', background: panicSent ? '#10271b' : '#2a1414', border:`1px solid ${panicSent ? 'rgba(52,224,138,.45)' : 'rgba(255,93,93,.4)'}`, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:7 }}>
-                <Icon name={panicSent ? 'check' : 'sos'} size={48} color={panicSent ? G : '#ff5d5d'} />
-                <span style={{ fontSize:13, fontWeight:600, color: panicSent ? G : '#ff9a9a' }}>{panicSent ? 'Alert sent' : (panicPct > 0 ? 'Hold…' : 'Hold')}</span>
+            <div style={{ fontFamily:"'Space Grotesk'", fontSize:20, fontWeight:600, marginBottom:6 }}>{panicSent?'Security alerted':'Emergency alert'}</div>
+            <div style={{ fontSize:12, color:'#aebcb3', marginBottom:28, maxWidth:200 }}>{panicSent?'Officers are on their way.':'Press and hold to alert security.'}</div>
+            <div onMouseDown={startPanic} onMouseUp={cancelPanic} onMouseLeave={cancelPanic} onTouchStart={startPanic} onTouchEnd={cancelPanic}
+              style={{ width:176, height:176, borderRadius:'50%', cursor:panicSent?'default':'pointer', userSelect:'none', background:`conic-gradient(${panicSent?G:'#ff5d5d'} ${panicPct*3.6}deg, rgba(255,93,93,.15) 0deg)`, display:'grid', placeItems:'center' }}>
+              <div style={{ width:142, height:142, borderRadius:'50%', background:panicSent?'#10271b':'#2a1414', border:`1px solid ${panicSent?'rgba(52,224,138,.45)':'rgba(255,93,93,.4)'}`, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6 }}>
+                <Icon name={panicSent?'check':'sos'} size={44} color={panicSent?G:'#ff5d5d'} />
+                <span style={{ fontSize:12, fontWeight:600, color:panicSent?G:'#ff9a9a' }}>{panicSent?'Sent':panicPct>0?'Hold…':'Hold'}</span>
               </div>
             </div>
           </div>
@@ -372,8 +365,8 @@ function PhoneDemo() {
 
         {/* Toast */}
         {toast && (
-          <div className="hktoast" style={{ position:'absolute', bottom:84, left:'50%', transform:'translateX(-50%)', background:'#1d3327', border:'1px solid rgba(52,224,138,.3)', color:'#cdebd9', fontSize:13, fontWeight:500, padding:'10px 16px', borderRadius:11, whiteSpace:'nowrap', zIndex:25, display:'flex', alignItems:'center', gap:8 }}>
-            <Icon name="check_circle" size={18} color={G} />{toast}
+          <div className="hktoast" style={{ position:'absolute', bottom:78, left:'50%', transform:'translateX(-50%)', background:'#1d3327', border:'1px solid rgba(52,224,138,.3)', color:'#cdebd9', fontSize:12, fontWeight:500, padding:'9px 14px', borderRadius:10, whiteSpace:'nowrap', zIndex:25, display:'flex', alignItems:'center', gap:7 }}>
+            <Icon name="check_circle" size={16} color={G} />{toast}
           </div>
         )}
       </div>
@@ -381,25 +374,25 @@ function PhoneDemo() {
   );
 }
 
-// ─── FAQ ACCORDION ────────────────────────────────────────────────────────────
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
 
 function FAQ() {
   const [open, setOpen] = useState(0);
   const items = [
-    { q: 'What is Homekeep?', a: 'Homekeep is a cloud-based security and housing-society management platform with a vision to make your community better managed and strongly connected, with no hardware to buy.' },
-    { q: 'How do I roll it out in my estate?', a: 'Invite your residents and gatekeepers by email or phone number. They download the app, you approve them, and your estate is live the same day.' },
-    { q: 'Does it work without internet at the gate?', a: 'Gatekeepers can verify invitation codes offline; all entries sync automatically once back online.' },
-    { q: 'Is resident data secure?', a: 'Everything is encrypted in transit and at rest, and residents stay in control of who can see their visitor history.' },
+    { q:'What is Homekeep?', a:'Homekeep is a cloud-based security and housing-society management platform. No hardware required — your estate is live the same day.' },
+    { q:'How do I roll it out in my estate?', a:'Invite your residents and gatekeepers by email or phone number. They download the app, you approve them, and you\'re live.' },
+    { q:'Does it work without internet at the gate?', a:'Gatekeepers can verify invitation codes offline; all entries sync automatically once back online.' },
+    { q:'Is resident data secure?', a:'Everything is encrypted in transit and at rest, and residents control who can see their visitor history.' },
   ];
   return (
     <div>
-      {items.map((item, i) => (
+      {items.map((item,i) => (
         <div key={i} style={{ border:'1px solid rgba(255,255,255,.08)', borderRadius:14, marginBottom:11, overflow:'hidden', background:'#0f1c15' }}>
-          <button onClick={() => setOpen(open === i ? -1 : i)} style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16, padding:'18px 20px', background:'none', border:'none', cursor:'pointer', color:'#e9f1ec', textAlign:'left' }}>
+          <button onClick={()=>setOpen(open===i?-1:i)} style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16, padding:'18px 20px', background:'none', border:'none', cursor:'pointer', color:'#e9f1ec', textAlign:'left' }}>
             <span style={{ fontFamily:"'Space Grotesk'", fontSize:16, fontWeight:600 }}>{item.q}</span>
-            <Icon name="expand_more" size={24} color={G} style={{ transform: open === i ? 'rotate(180deg)' : 'rotate(0deg)', transition:'transform .2s', flexShrink:0 }} />
+            <Icon name="expand_more" size={24} color={G} style={{ transform:open===i?'rotate(180deg)':'rotate(0deg)', transition:'transform .2s', flexShrink:0 }} />
           </button>
-          {open === i && <div style={{ padding:'0 20px 18px', fontSize:14, lineHeight:1.6, color:MUTED }}>{item.a}</div>}
+          {open===i && <div style={{ padding:'0 20px 18px', fontSize:14, lineHeight:1.6, color:MUTED }}>{item.a}</div>}
         </div>
       ))}
     </div>
@@ -411,27 +404,26 @@ function FAQ() {
 function Waitlist() {
   const [email, setEmail] = useState('');
   const [joined, setJoined] = useState(false);
-  const join = () => {
-    if (!email.includes('@')) return;
-    setJoined(true);
-  };
+  const join = () => { if (!email.includes('@')) return; setJoined(true); };
   return (
-    <section id="waitlist" style={{ maxWidth:1180, margin:'0 auto', padding:'40px 28px', scrollMarginTop:80 }}>
-      <div style={{ position:'relative', overflow:'hidden', background:'linear-gradient(150deg,#123a28,#0c2118)', border:'1px solid rgba(52,224,138,.22)', borderRadius:24, padding:'54px 40px', textAlign:'center' }}>
-        <div style={{ position:'absolute', top:-60, right:-40, width:300, height:300, borderRadius:'50%', background:'radial-gradient(circle,#1d7048,transparent 70%)', filter:'blur(20px)', opacity:.5, pointerEvents:'none' }} />
-        <div style={{ position:'relative' }}>
-          <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:34, fontWeight:700, letterSpacing:'-.02em', margin:'0 0 10px' }}>Join the waitlist</h2>
-          <p style={{ fontSize:16, color:'#bcd3c6', margin:'0 0 26px' }}>Be the first to know when Homekeep launches in your estate.</p>
-          {!joined ? (
-            <div style={{ display:'flex', gap:10, maxWidth:440, margin:'0 auto' }}>
-              <input value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==='Enter'&&join()} placeholder="Enter your email address" style={{ flex:1, background:'rgba(0,0,0,.25)', border:'1px solid rgba(255,255,255,.15)', borderRadius:12, padding:14, color:'#fff', fontSize:15, outline:'none' }} />
-              <button onClick={join} style={{ background:G, color:'#06140d', border:'none', borderRadius:12, padding:'14px 22px', fontWeight:600, fontSize:15, cursor:'pointer', whiteSpace:'nowrap' }}>Join now</button>
-            </div>
-          ) : (
-            <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(0,0,0,.25)', border:'1px solid rgba(52,224,138,.4)', borderRadius:12, padding:'14px 22px', color:'#cdebd9', fontWeight:500 }}>
-              <Icon name="check_circle" size={22} color={G} />You're on the list. We'll be in touch.
-            </div>
-          )}
+    <section id="waitlist" style={{ scrollMarginTop:80 }}>
+      <div className="wrap" style={{ paddingTop:40, paddingBottom:40 }}>
+        <div style={{ position:'relative', overflow:'hidden', background:'linear-gradient(150deg,#123a28,#0c2118)', border:'1px solid rgba(52,224,138,.22)', borderRadius:24, padding:'54px 40px', textAlign:'center' }}>
+          <div style={{ position:'absolute', top:-60, right:-40, width:300, height:300, borderRadius:'50%', background:'radial-gradient(circle,#1d7048,transparent 70%)', filter:'blur(20px)', opacity:.5, pointerEvents:'none' }} />
+          <div style={{ position:'relative' }}>
+            <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:'clamp(26px,4vw,34px)', fontWeight:700, letterSpacing:'-.02em', margin:'0 0 10px' }}>Join the waitlist</h2>
+            <p style={{ fontSize:16, color:'#bcd3c6', margin:'0 0 26px' }}>Be the first to know when Homekeep launches in your estate.</p>
+            {!joined ? (
+              <div className="waitlist-row" style={{ display:'flex', gap:10, maxWidth:440, margin:'0 auto' }}>
+                <input value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==='Enter'&&join()} placeholder="Enter your email address" style={{ flex:1, background:'rgba(0,0,0,.25)', border:'1px solid rgba(255,255,255,.15)', borderRadius:'12px 0 0 12px', padding:14, color:'#fff', fontSize:15, outline:'none', minWidth:0 }} />
+                <button onClick={join} style={{ background:G, color:'#06140d', border:'none', borderRadius:'0 12px 12px 0', padding:'14px 22px', fontWeight:600, fontSize:15, cursor:'pointer', whiteSpace:'nowrap' }}>Join now</button>
+              </div>
+            ) : (
+              <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(0,0,0,.25)', border:'1px solid rgba(52,224,138,.4)', borderRadius:12, padding:'14px 22px', color:'#cdebd9', fontWeight:500 }}>
+                <Icon name="check_circle" size={22} color={G} />You're on the list. We'll be in touch.
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -443,99 +435,101 @@ function Waitlist() {
 function Contact() {
   const [sent, setSent] = useState(false);
   return (
-    <section id="contact" style={{ maxWidth:1180, margin:'0 auto', padding:'50px 28px 60px' }}>
-      <div style={{ display:'grid', gridTemplateColumns:'.9fr 1.1fr', gap:48 }}>
-        <div>
-          <div style={{ fontSize:13, fontWeight:600, color:G, letterSpacing:'.08em', marginBottom:10 }}>GET IN TOUCH</div>
-          <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:34, fontWeight:700, letterSpacing:'-.02em', margin:'0 0 14px' }}>Talk to our team</h2>
-          <p style={{ fontSize:16, lineHeight:1.6, color:MUTED, margin:'0 0 24px' }}>Drop a message and we'll respond shortly to help you bring Homekeep to your community.</p>
-          {[['mail','hello@homekeep.ng'],['call','+234 800 000 0000'],['location_on','Lagos, Nigeria']].map(([icon,text]) => (
-            <div key={icon} style={{ display:'flex', alignItems:'center', gap:12, color:'#cfe0d6', fontSize:15, marginBottom:14 }}>
-              <Icon name={icon} size={21} color={G} />{text}
-            </div>
-          ))}
-        </div>
-        <div style={{ background:'#0f1c15', border:`1px solid ${BORDER}`, borderRadius:18, padding:24 }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:12 }}>
-            <input placeholder="Name" style={{ background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none' }} />
-            <input placeholder="Email" style={{ background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none' }} />
+    <section id="contact">
+      <div className="wrap" style={{ paddingTop:50, paddingBottom:60 }}>
+        <div className="contact-grid">
+          <div>
+            <div className="sec-tag">GET IN TOUCH</div>
+            <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:'clamp(26px,3.5vw,34px)', fontWeight:700, letterSpacing:'-.02em', margin:'0 0 14px' }}>Talk to our team</h2>
+            <p style={{ fontSize:16, lineHeight:1.6, color:MUTED, margin:'0 0 24px' }}>Drop a message and we'll respond shortly to help bring Homekeep to your community.</p>
+            {[['mail','hello@homekeep.ng'],['call','+234 800 000 0000'],['location_on','Lagos, Nigeria']].map(([icon,text]) => (
+              <div key={icon} style={{ display:'flex', alignItems:'center', gap:12, color:'#cfe0d6', fontSize:15, marginBottom:14 }}>
+                <Icon name={icon} size={21} color={G} />{text}
+              </div>
+            ))}
           </div>
-          <input placeholder="Subject" style={{ width:'100%', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none', marginBottom:12 }} />
-          <textarea placeholder="Message" style={{ width:'100%', height:110, resize:'none', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none', marginBottom:14 }} />
-          <button onClick={()=>setSent(true)} style={{ width:'100%', background: sent ? '#1e3327' : G, color: sent ? G : '#06140d', border: sent ? `1px solid ${G}` : 'none', borderRadius:11, padding:13, fontWeight:600, fontSize:15, cursor:'pointer' }}>
-            {sent ? '✓ Message sent' : 'Send message'}
-          </button>
+          <div style={{ background:'#0f1c15', border:`1px solid ${BORDER}`, borderRadius:18, padding:24 }}>
+            <div className="contact-form-grid">
+              <input placeholder="Name" style={{ background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none' }} />
+              <input placeholder="Email" style={{ background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none' }} />
+            </div>
+            <input placeholder="Subject" style={{ width:'100%', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none', marginBottom:12 }} />
+            <textarea placeholder="Message" style={{ width:'100%', height:110, resize:'none', background:INPUT, border:'1px solid rgba(255,255,255,.1)', borderRadius:10, padding:12, color:'#e9f1ec', fontSize:14, outline:'none', marginBottom:14 }} />
+            <button onClick={()=>setSent(true)} style={{ width:'100%', background:sent?'#1e3327':G, color:sent?G:'#06140d', border:sent?`1px solid ${G}`:'none', borderRadius:11, padding:13, fontWeight:600, fontSize:15, cursor:'pointer' }}>
+              {sent?'✓ Message sent':'Send message'}
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// ─── MAIN PAGE ────────────────────────────────────────────────────────────────
+// ─── LANDING PAGE ─────────────────────────────────────────────────────────────
 
 function LandingPage() {
   const features = [
-    { tag:'INVITATIONS', icon:'qr_code_2', title:'Invitations made easy', body:'Create single-use or multi-use entry codes and share them with guests in seconds.', iconBg:'rgba(52,224,138,.12)', iconColor:G },
-    { tag:'SECURITY', icon:'shield', title:'Enhanced gate security', body:'Monitor everyone entering and leaving your estate, with a full digital access log.', iconBg:'rgba(52,224,138,.12)', iconColor:G },
-    { tag:'PANIC ALARM', icon:'sos', title:'Instant panic alert', body:'One tap notifies your security officers, cutting emergency response time by 70%.', iconBg:'rgba(255,93,93,.12)', iconColor:'#ff7a7a' },
-    { tag:'PAYMENTS', icon:'account_balance_wallet', title:'Simple facility dues', body:'Collect levies and fees in-app, with automatic receipts and clear breakdowns.', iconBg:'rgba(52,224,138,.12)', iconColor:G },
-    { tag:'COMPLAINTS', icon:'forum', title:'Streamlined complaints', body:'Residents lodge issues directly to management and track them to resolution.', iconBg:'rgba(52,224,138,.12)', iconColor:G },
-    { tag:'POLLS', icon:'how_to_vote', title:'Community decisions', body:"Run transparent opinion polls so every resident's voice counts on what matters.", iconBg:'rgba(52,224,138,.12)', iconColor:G },
+    { tag:'INVITATIONS', icon:'qr_code_2', title:'Invitations made easy', body:'Create single-use or multi-use entry codes and share them with guests in seconds.', ic:G, ib:'rgba(52,224,138,.12)' },
+    { tag:'SECURITY', icon:'shield', title:'Enhanced gate security', body:'Monitor everyone entering and leaving your estate, with a full digital access log.', ic:G, ib:'rgba(52,224,138,.12)' },
+    { tag:'PANIC ALARM', icon:'sos', title:'Instant panic alert', body:'One tap notifies your security officers, cutting emergency response time by 70%.', ic:'#ff7a7a', ib:'rgba(255,93,93,.12)' },
+    { tag:'PAYMENTS', icon:'account_balance_wallet', title:'Simple facility dues', body:'Collect levies and fees in-app, with automatic receipts and clear breakdowns.', ic:G, ib:'rgba(52,224,138,.12)' },
+    { tag:'COMPLAINTS', icon:'forum', title:'Streamlined complaints', body:'Residents lodge issues directly to management and track them to resolution.', ic:G, ib:'rgba(52,224,138,.12)' },
+    { tag:'POLLS', icon:'how_to_vote', title:'Community decisions', body:"Run transparent opinion polls so every resident's voice counts on what matters.", ic:G, ib:'rgba(52,224,138,.12)' },
   ];
-  const whyItems = [
+  const why = [
     { icon:'bolt', title:'Easy to use', body:'Technology-enabled security that makes gatehouse guards up to 60% more effective, with no training headaches.' },
     { icon:'monitoring', title:'Monitor & manage', body:'Equip every guard with the gatekeeper app for unmatched oversight. Data privacy guaranteed.' },
-    { icon:'sync', title:'Always improving', body:'Frequent updates keep Homekeep at global industry standards, at no additional cost to you.' },
+    { icon:'sync', title:'Always improving', body:'Frequent updates keep Homekeep at global industry standards, at no extra cost.' },
   ];
 
   return (
-    <div style={{ background:'#081210', color:'#e9f1ec', fontFamily:"'Hanken Grotesk', sans-serif", minHeight:'100vh', overflowX:'hidden' }}>
+    <div style={{ background:'#081210', color:'#e9f1ec', minHeight:'100vh', overflowX:'hidden' }}>
 
       {/* NAV */}
       <header style={{ position:'sticky', top:0, zIndex:50, backdropFilter:'blur(14px)', background:'rgba(8,18,16,.72)', borderBottom:'1px solid rgba(255,255,255,.06)' }}>
-        <div style={{ maxWidth:1180, margin:'0 auto', padding:'16px 28px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:24 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+        <div className="wrap" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:20, padding:'16px 28px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10, flexShrink:0 }}>
             <div style={{ width:32, height:32, borderRadius:9, background:G, display:'grid', placeItems:'center' }}><Icon name="cottage" size={20} color="#06140d" /></div>
             <span style={{ fontFamily:"'Space Grotesk'", fontWeight:700, fontSize:20, letterSpacing:'-.01em' }}>Homekeep</span>
           </div>
-          <nav style={{ display:'flex', alignItems:'center', gap:28, fontSize:15, color:'#aebcb3' }}>
+          <nav className="nav-links">
             {[['#features','Features'],['#why','Why us'],['#faq','FAQ'],['#waitlist','Waitlist']].map(([href,label]) => (
               <a key={href} href={href} style={{ color:'inherit', textDecoration:'none' }}>{label}</a>
             ))}
           </nav>
-          <a href="app.html" style={{ display:'flex', alignItems:'center', gap:7, background:G, color:'#06140d', fontWeight:600, fontSize:14, padding:'10px 16px', borderRadius:10, textDecoration:'none' }}>
+          <a href="/landing/app.html" style={{ display:'flex', alignItems:'center', gap:7, background:G, color:'#06140d', fontWeight:600, fontSize:14, padding:'10px 16px', borderRadius:10, textDecoration:'none', flexShrink:0 }}>
             Launch demo <Icon name="arrow_forward" size={18} color="#06140d" />
           </a>
         </div>
       </header>
 
       {/* HERO */}
-      <section style={{ position:'relative', maxWidth:1180, margin:'0 auto', padding:'64px 28px 40px', display:'grid', gridTemplateColumns:'1.05fr .95fr', gap:48, alignItems:'center' }}>
-        <div style={{ position:'absolute', top:-40, left:-120, width:420, height:420, borderRadius:'50%', background:'radial-gradient(circle,#16563a,transparent 70%)', filter:'blur(30px)', opacity:.6, animation:'hkglow 6s ease-in-out infinite', pointerEvents:'none' }} />
-        <div style={{ position:'relative' }}>
-          <h1 style={{ fontFamily:"'Space Grotesk'", fontWeight:700, fontSize:56, lineHeight:1.04, letterSpacing:'-.02em', margin:'0 0 18px' }}>Visitors, security<br/>and dues. One app.</h1>
-          <p style={{ fontSize:18, lineHeight:1.55, color:'#aebcb3', margin:'0 0 12px', maxWidth:480 }}>Homekeep handles visitor access, gate security, facility dues and community decisions for residential estates, with no hardware required.</p>
-          <p style={{ fontFamily:"'Space Grotesk'", fontSize:15, color:G, margin:'0 0 30px', fontWeight:500 }}>Built for landlords. Loved by tenants.</p>
-          <div style={{ display:'flex', gap:14, flexWrap:'wrap' }}>
-            {[['android','GET IT ON','Google Play'],['ios_share','Download on the','App Store']].map(([icon,sub,label]) => (
-              <a key={label} href="#demo" style={{ display:'flex', alignItems:'center', gap:11, background:'#101c16', border:'1px solid rgba(255,255,255,.1)', padding:'11px 18px', borderRadius:12, textDecoration:'none', color:'#e9f1ec' }}>
-                <Icon name={icon} size={26} color={G} />
-                <span style={{ lineHeight:1.15 }}><span style={{ fontSize:11, color:DIM, display:'block' }}>{sub}</span><span style={{ fontSize:16, fontWeight:600, fontFamily:"'Space Grotesk'" }}>{label}</span></span>
-              </a>
-            ))}
+      <section style={{ position:'relative' }}>
+        <div style={{ position:'absolute', top:-40, left:-80, width:420, height:420, borderRadius:'50%', background:'radial-gradient(circle,#16563a,transparent 70%)', filter:'blur(30px)', opacity:.55, animation:'hkglow 6s ease-in-out infinite', pointerEvents:'none' }} />
+        <div className="wrap hero-grid" style={{ padding:'64px 28px 40px' }}>
+          <div className="hero-text" style={{ position:'relative' }}>
+            <h1 className="hero-h1">Visitors, security<br/>and dues. One app.</h1>
+            <p style={{ fontSize:18, lineHeight:1.55, color:'#aebcb3', margin:'0 0 10px', maxWidth:480 }}>Homekeep handles visitor access, gate security, facility dues and community decisions — no hardware required.</p>
+            <p style={{ fontFamily:"'Space Grotesk'", fontSize:15, color:G, margin:'0 0 28px', fontWeight:500 }}>Built for landlords. Loved by tenants.</p>
+            <div className="store-badges">
+              {[['android','GET IT ON','Google Play'],['ios_share','Download on the','App Store']].map(([icon,sub,label]) => (
+                <a key={label} href="#demo" style={{ display:'flex', alignItems:'center', gap:11, background:'#101c16', border:'1px solid rgba(255,255,255,.1)', padding:'11px 18px', borderRadius:12, textDecoration:'none', color:'#e9f1ec' }}>
+                  <Icon name={icon} size={26} color={G} />
+                  <span style={{ lineHeight:1.15 }}><span style={{ fontSize:11, color:DIM, display:'block' }}>{sub}</span><span style={{ fontSize:16, fontWeight:600, fontFamily:"'Space Grotesk'" }}>{label}</span></span>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-
-        {/* Phone demo */}
-        <div id="demo" style={{ position:'relative', display:'flex', justifyContent:'center', scrollMarginTop:90 }}>
-          <div style={{ position:'absolute', inset:0, background:'radial-gradient(circle at 60% 40%,#15402c,transparent 65%)', filter:'blur(30px)', opacity:.7, pointerEvents:'none' }} />
-          <div style={{ position:'relative' }}><PhoneDemo /></div>
+          <div id="demo" className="hero-phone" style={{ scrollMarginTop:90 }}>
+            <div style={{ position:'absolute', inset:0, background:'radial-gradient(circle at 60% 40%,#15402c,transparent 65%)', filter:'blur(30px)', opacity:.7, pointerEvents:'none' }} />
+            <div className="hero-phone-inner" style={{ position:'relative' }}><PhoneDemo /></div>
+          </div>
         </div>
       </section>
 
-      {/* STATS STRIP */}
+      {/* STATS */}
       <section style={{ borderTop:'1px solid rgba(255,255,255,.06)', borderBottom:'1px solid rgba(255,255,255,.06)', background:'#0a140f' }}>
-        <div style={{ maxWidth:1180, margin:'0 auto', padding:'34px 28px', display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:24, textAlign:'center' }}>
+        <div className="wrap stats-grid" style={{ paddingTop:34, paddingBottom:34 }}>
           {[['60%','More efficient gate security'],['70%','Faster emergency response'],['₦0','Hardware to install'],['24/7','Community safety']].map(([stat,label]) => (
             <div key={stat}><div style={{ fontFamily:"'Space Grotesk'", fontSize:32, fontWeight:700, color:G }}>{stat}</div><div style={{ fontSize:13, color:MUTED, marginTop:4 }}>{label}</div></div>
           ))}
@@ -543,33 +537,35 @@ function LandingPage() {
       </section>
 
       {/* FEATURES */}
-      <section id="features" style={{ maxWidth:1180, margin:'0 auto', padding:'80px 28px 40px', scrollMarginTop:80 }}>
-        <div style={{ textAlign:'center', marginBottom:48 }}>
-          <div style={{ fontSize:13, fontWeight:600, color:G, letterSpacing:'.08em', marginBottom:10 }}>FEATURES</div>
-          <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:40, fontWeight:700, letterSpacing:'-.02em', margin:0 }}>What Homekeep handles</h2>
-        </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:18 }}>
-          {features.map((f,i) => (
-            <div key={i} style={{ background:'#0f1c15', border:`1px solid ${BORDER}`, borderRadius:18, padding:26 }}>
-              <div style={{ width:46, height:46, borderRadius:13, background:f.iconBg, display:'grid', placeItems:'center', marginBottom:16 }}><Icon name={f.icon} size={26} color={f.iconColor} /></div>
-              <div style={{ fontSize:11, fontWeight:600, color:'#7f968a', letterSpacing:'.06em', marginBottom:7 }}>{f.tag}</div>
-              <div style={{ fontFamily:"'Space Grotesk'", fontSize:19, fontWeight:600, marginBottom:8 }}>{f.title}</div>
-              <div style={{ fontSize:14, lineHeight:1.55, color:MUTED }}>{f.body}</div>
-            </div>
-          ))}
+      <section id="features" className="sec-pad" style={{ scrollMarginTop:80 }}>
+        <div className="wrap">
+          <div style={{ textAlign:'center', marginBottom:48 }}>
+            <div className="sec-tag">FEATURES</div>
+            <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:'clamp(28px,4vw,40px)', fontWeight:700, letterSpacing:'-.02em', margin:0 }}>What Homekeep handles</h2>
+          </div>
+          <div className="features-grid">
+            {features.map((f,i) => (
+              <div key={i} style={{ background:'#0f1c15', border:`1px solid ${BORDER}`, borderRadius:18, padding:26 }}>
+                <div style={{ width:46, height:46, borderRadius:13, background:f.ib, display:'grid', placeItems:'center', marginBottom:14 }}><Icon name={f.icon} size={26} color={f.ic} /></div>
+                <div style={{ fontSize:11, fontWeight:600, color:'#7f968a', letterSpacing:'.06em', marginBottom:6 }}>{f.tag}</div>
+                <div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600, marginBottom:7 }}>{f.title}</div>
+                <div style={{ fontSize:14, lineHeight:1.55, color:MUTED }}>{f.body}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* WHY US */}
-      <section id="why" style={{ maxWidth:1180, margin:'0 auto', padding:'50px 28px 40px', scrollMarginTop:80 }}>
-        <div style={{ display:'grid', gridTemplateColumns:'.8fr 1.2fr', gap:48, alignItems:'center' }}>
+      <section id="why" style={{ scrollMarginTop:80, paddingTop:50, paddingBottom:40 }}>
+        <div className="wrap why-grid">
           <div>
-            <div style={{ fontSize:13, fontWeight:600, color:G, letterSpacing:'.08em', marginBottom:10 }}>WHY CHOOSE US</div>
-            <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:36, fontWeight:700, letterSpacing:'-.02em', margin:'0 0 14px' }}>Built for the<br/>people who run it.</h2>
-            <p style={{ fontSize:16, lineHeight:1.6, color:MUTED, margin:0 }}>Homekeep takes the manual work out of running an estate, from gate logs to levy chasing to complaint tracking, so it stays in one place.</p>
+            <div className="sec-tag">WHY CHOOSE US</div>
+            <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:'clamp(26px,3.5vw,36px)', fontWeight:700, letterSpacing:'-.02em', margin:'0 0 14px' }}>Built for the<br/>people who run it.</h2>
+            <p style={{ fontSize:16, lineHeight:1.6, color:MUTED, margin:0 }}>Homekeep takes the manual work out of running an estate — gate logs, levy chasing, complaint tracking — all in one place.</p>
           </div>
           <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-            {whyItems.map((w,i) => (
+            {why.map((w,i) => (
               <div key={i} style={{ display:'flex', gap:16, background:'#0f1c15', border:`1px solid ${BORDER}`, borderRadius:16, padding:20 }}>
                 <div style={{ width:44, height:44, borderRadius:12, background:'rgba(52,224,138,.12)', display:'grid', placeItems:'center', flexShrink:0 }}><Icon name={w.icon} size={24} color={G} /></div>
                 <div><div style={{ fontFamily:"'Space Grotesk'", fontSize:18, fontWeight:600, marginBottom:5 }}>{w.title}</div><div style={{ fontSize:14, lineHeight:1.55, color:MUTED }}>{w.body}</div></div>
@@ -580,23 +576,22 @@ function LandingPage() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" style={{ maxWidth:760, margin:'0 auto', padding:'70px 28px 40px', scrollMarginTop:80 }}>
-        <div style={{ textAlign:'center', marginBottom:40 }}>
-          <div style={{ fontSize:13, fontWeight:600, color:G, letterSpacing:'.08em', marginBottom:10 }}>FAQ</div>
-          <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:36, fontWeight:700, letterSpacing:'-.02em', margin:0 }}>Questions, answered</h2>
+      <section id="faq" className="sec-pad" style={{ scrollMarginTop:80 }}>
+        <div className="wrap" style={{ maxWidth:760 }}>
+          <div style={{ textAlign:'center', marginBottom:40 }}>
+            <div className="sec-tag">FAQ</div>
+            <h2 style={{ fontFamily:"'Space Grotesk'", fontSize:'clamp(26px,3.5vw,36px)', fontWeight:700, letterSpacing:'-.02em', margin:0 }}>Questions, answered</h2>
+          </div>
+          <FAQ />
         </div>
-        <FAQ />
       </section>
 
-      {/* WAITLIST */}
       <Waitlist />
-
-      {/* CONTACT */}
       <Contact />
 
       {/* FOOTER */}
       <footer style={{ borderTop:'1px solid rgba(255,255,255,.06)', background:'#0a140f' }}>
-        <div style={{ maxWidth:1180, margin:'0 auto', padding:'40px 28px', display:'flex', justifyContent:'space-between', alignItems:'start', gap:40, flexWrap:'wrap' }}>
+        <div className="wrap footer-inner" style={{ paddingTop:40, paddingBottom:40 }}>
           <div style={{ maxWidth:340 }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
               <div style={{ width:30, height:30, borderRadius:8, background:G, display:'grid', placeItems:'center' }}><Icon name="cottage" size={19} color="#06140d" /></div>
@@ -604,14 +599,14 @@ function LandingPage() {
             </div>
             <p style={{ fontSize:13, lineHeight:1.6, color:'#7f968a', margin:0 }}>Cloud-based security and housing society management that keeps your community better managed and strongly connected.</p>
           </div>
-          <div style={{ display:'flex', gap:14, flexWrap:'wrap', alignItems:'center' }}>
+          <div className="footer-badges">
             {[['android','GET IT ON','Google Play'],['ios_share','Download on the','App Store']].map(([icon,sub,label]) => (
               <a key={label} href="#demo" style={{ display:'flex', alignItems:'center', gap:9, background:'#101c16', border:'1px solid rgba(255,255,255,.1)', padding:'9px 15px', borderRadius:11, textDecoration:'none', color:'#e9f1ec' }}>
                 <Icon name={icon} size={22} color={G} />
                 <span style={{ lineHeight:1.1 }}><span style={{ fontSize:10, color:DIM, display:'block' }}>{sub}</span><span style={{ fontSize:14, fontWeight:600, fontFamily:"'Space Grotesk'" }}>{label}</span></span>
               </a>
             ))}
-            <a href="app.html" style={{ display:'flex', alignItems:'center', gap:8, background:'rgba(52,224,138,.1)', border:'1px solid rgba(52,224,138,.25)', padding:'9px 16px', borderRadius:11, textDecoration:'none', color:G, fontWeight:600, fontSize:14 }}>
+            <a href="/landing/app.html" style={{ display:'flex', alignItems:'center', gap:8, background:'rgba(52,224,138,.1)', border:'1px solid rgba(52,224,138,.25)', padding:'9px 16px', borderRadius:11, textDecoration:'none', color:G, fontWeight:600, fontSize:14 }}>
               <Icon name="play_circle" size={20} color={G} /> Full prototype
             </a>
           </div>
