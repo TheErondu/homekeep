@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0..1,0&display=block" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::-webkit-scrollbar{width:0;height:0}
+  @keyframes hkpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,93,93,.45)}50%{box-shadow:0 0 0 10px rgba(255,93,93,0)}}
+  @keyframes hktoast{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes hkslide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div style="background:radial-gradient(circle at 50% 0%,#0e2419,#070f0b 60%);min-height:100vh;color:#e9f1ec;font-family:'Hanken Grotesk',sans-serif;display:flex;flex-direction:column;align-items:center;padding:40px 20px 80px">
+
+  <div style="text-align:center;margin-bottom:28px">
+    <div style="display:inline-flex;align-items:center;gap:9px;margin-bottom:10px">
+      <div style="width:28px;height:28px;border-radius:8px;background:#34e08a;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#06140d">cottage</span></div>
+      <span style="font-family:'Space Grotesk';font-weight:700;font-size:18px">Homekeep</span>
+      <span style="font-size:12px;color:#6f8579;border-left:1px solid rgba(255,255,255,.12);padding-left:9px">Interactive prototype</span>
+    </div>
+    <div style="font-size:13px;color:#8da093">Sign up, pick a user type, and explore every feature.</div>
+  </div>
+
+  <!-- PHONE -->
+  <div style="position:relative;width:332px;height:712px;background:#05100b;border:2px solid #1e2c24;border-radius:50px;padding:11px;box-shadow:0 50px 100px -30px rgba(0,0,0,.85),inset 0 0 0 1px rgba(255,255,255,.03)">
+    <div style="position:relative;width:100%;height:100%;background:#0a1611;border-radius:40px;overflow:hidden;display:flex;flex-direction:column">
+
+      <!-- SPLASH -->
+      <sc-if value="{{ showSplash }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:64px 28px 36px;background:linear-gradient(180deg,#0c2418,#0a1611)">
+          <div style="text-align:center;margin-top:40px;animation:hkslide .4s ease">
+            <div style="width:78px;height:78px;border-radius:24px;background:#34e08a;display:grid;place-items:center;margin:0 auto 26px;box-shadow:0 20px 50px -10px rgba(52,224,138,.5)"><span style="font-family:'Material Symbols Rounded';font-size:44px;color:#06140d">cottage</span></div>
+            <div style="font-family:'Space Grotesk';font-size:30px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px">Welcome to Homekeep</div>
+            <div style="font-size:15px;line-height:1.55;color:#9cb3a6;max-width:240px;margin:0 auto">Your estate's visitors, security and dues, all in one place.</div>
+          </div>
+          <div>
+            <button onClick="{{ start }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:14px;padding:15px;font-weight:600;font-size:15px;cursor:pointer;font-family:inherit;margin-bottom:11px">Get started</button>
+            <button onClick="{{ gotoLogin }}" style="width:100%;background:transparent;color:#cfe0d6;border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:15px;font-weight:600;font-size:15px;cursor:pointer;font-family:inherit">I already have an account</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- LOGIN -->
+      <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:30px 26px 30px;animation:hkslide .35s ease">
+          <button onClick="{{ gotoSplash }}" style="background:none;border:none;color:#8da093;cursor:pointer;display:flex;align-items:center;gap:5px;font-size:13px;font-family:inherit;padding:0;margin-bottom:26px"><span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_back</span>Back</button>
+          <div style="font-family:'Space Grotesk';font-size:26px;font-weight:700;margin-bottom:6px">Welcome back</div>
+          <div style="font-size:14px;color:#9cb3a6;margin-bottom:26px">Sign in to your Homekeep account.</div>
+          <div style="font-size:12px;color:#8da093;margin-bottom:7px">Email</div>
+          <input value="{{ loginEmail }}" onInput="{{ setLoginEmail }}" placeholder="you@email.com" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:14px">
+          <div style="font-size:12px;color:#8da093;margin-bottom:7px">Password</div>
+          <input value="{{ loginPass }}" onInput="{{ setLoginPass }}" type="password" placeholder="••••••••" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:8px">
+          <div style="text-align:right;font-size:12px;color:#34e08a;margin-bottom:20px;cursor:pointer">Forgot password?</div>
+          <button onClick="{{ submitLogin }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:13px;padding:14px;font-weight:600;font-size:15px;cursor:pointer;font-family:inherit;margin-bottom:24px">Sign in</button>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div><span style="font-size:11px;color:#6f8579">QUICK DEMO LOGIN</span><div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ roleChips }}" as="r" hint-placeholder-count="3">
+              <button onClick="{{ r.onClick }}" style="display:flex;align-items:center;gap:12px;background:#13211a;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;cursor:pointer;color:#e9f1ec;font-family:inherit;text-align:left">
+                <div style="width:34px;height:34px;border-radius:10px;background:rgba(52,224,138,.12);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#34e08a">{{ r.icon }}</span></div>
+                <div style="flex:1"><div style="font-size:13px;font-weight:600">{{ r.label }}</div><div style="font-size:11px;color:#8da093">{{ r.sub }}</div></div>
+                <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#6f8579">chevron_right</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- REGISTER: TYPE -->
+      <sc-if value="{{ showRegType }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:30px 26px 30px;animation:hkslide .35s ease">
+          <button onClick="{{ gotoSplash }}" style="background:none;border:none;color:#8da093;cursor:pointer;display:flex;align-items:center;gap:5px;font-size:13px;font-family:inherit;padding:0;margin-bottom:26px"><span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_back</span>Back</button>
+          <div style="font-family:'Space Grotesk';font-size:26px;font-weight:700;margin-bottom:6px">Who are you?</div>
+          <div style="font-size:14px;color:#9cb3a6;margin-bottom:24px">Choose how you'll use Homekeep.</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ roleChips }}" as="r" hint-placeholder-count="3">
+              <button onClick="{{ r.onPick }}" style="display:flex;align-items:center;gap:14px;background:#13211a;border:1px solid rgba(255,255,255,.08);border-radius:15px;padding:16px;cursor:pointer;color:#e9f1ec;font-family:inherit;text-align:left">
+                <div style="width:44px;height:44px;border-radius:13px;background:rgba(52,224,138,.12);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">{{ r.icon }}</span></div>
+                <div style="flex:1"><div style="font-size:15px;font-weight:600">{{ r.label }}</div><div style="font-size:12px;color:#8da093;margin-top:2px">{{ r.desc }}</div></div>
+                <span style="font-family:'Material Symbols Rounded';font-size:22px;color:#6f8579">chevron_right</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- REGISTER: FORM -->
+      <sc-if value="{{ showRegForm }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:30px 26px 30px;overflow-y:auto;animation:hkslide .35s ease">
+          <button onClick="{{ backRegType }}" style="background:none;border:none;color:#8da093;cursor:pointer;display:flex;align-items:center;gap:5px;font-size:13px;font-family:inherit;padding:0;margin-bottom:22px"><span style="font-family:'Material Symbols Rounded';font-size:20px">arrow_back</span>Change type</button>
+          <div style="display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:rgba(52,224,138,.12);border:1px solid rgba(52,224,138,.25);border-radius:999px;padding:5px 12px;margin-bottom:18px"><span style="font-family:'Material Symbols Rounded';font-size:16px;color:#34e08a">{{ regRoleIcon }}</span><span style="font-size:12px;color:#7ff0b6;font-weight:600">{{ regRoleLabel }}</span></div>
+          <div style="font-family:'Space Grotesk';font-size:24px;font-weight:700;margin-bottom:22px">Create your account</div>
+          <div style="font-size:12px;color:#8da093;margin-bottom:7px">Full name</div>
+          <input value="{{ regName }}" onInput="{{ setRegName }}" placeholder="e.g. Tunde Bakare" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:14px">
+          <div style="font-size:12px;color:#8da093;margin-bottom:7px">Email</div>
+          <input value="{{ regEmail }}" onInput="{{ setRegEmail }}" placeholder="you@email.com" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:14px">
+          <div style="font-size:12px;color:#8da093;margin-bottom:7px">{{ estateFieldLabel }}</div>
+          <input value="{{ regEstate }}" onInput="{{ setRegEstate }}" placeholder="{{ estateFieldHint }}" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:14px">
+          <div style="font-size:12px;color:#8da093;margin-bottom:7px">Password</div>
+          <input value="{{ regPass }}" onInput="{{ setRegPass }}" type="password" placeholder="Create a password" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:22px">
+          <button onClick="{{ submitRegister }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:13px;padding:14px;font-weight:600;font-size:15px;cursor:pointer;font-family:inherit">Create account</button>
+        </div>
+      </sc-if>
+
+      <!-- APP -->
+      <sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+          <!-- status bar -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 22px 6px;font-size:13px;font-weight:600;color:#cfe0d6;flex:none">
+            <span>9:41</span>
+            <div style="display:flex;gap:5px;align-items:center"><span style="font-family:'Material Symbols Rounded';font-size:16px">signal_cellular_alt</span><span style="font-family:'Material Symbols Rounded';font-size:16px">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:16px">battery_full</span></div>
+          </div>
+          <!-- header -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 20px 12px;flex:none">
+            <div>
+              <div style="font-size:12px;color:#7f968a;font-weight:500">{{ headerSub }}</div>
+              <div style="font-family:'Space Grotesk';font-size:19px;font-weight:600">{{ headerTitle }}</div>
+            </div>
+            <div style="position:relative;width:38px;height:38px;border-radius:50%;background:#16271e;display:grid;place-items:center;border:1px solid rgba(255,255,255,.08)">
+              <span style="font-family:'Material Symbols Rounded';font-size:20px;color:#aebcb3">notifications</span>
+              <span style="position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:#ff5d5d"></span>
+            </div>
+          </div>
+
+          <div style="flex:1;overflow-y:auto;padding:4px 20px 96px">
+
+            <!-- ===== RESIDENT HOME ===== -->
+            <sc-if value="{{ isRHome }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(150deg,#123a28,#0d2a1d);border:1px solid rgba(52,224,138,.2);border-radius:18px;padding:16px;margin-bottom:16px">
+                <div style="display:flex;justify-content:space-between;align-items:start">
+                  <div><div style="font-size:12px;color:#8fd9b3;margin-bottom:4px">FACILITY DUES</div><div style="font-family:'Space Grotesk';font-size:26px;font-weight:700">{{ rBalanceLabel }}</div><div style="font-size:11px;color:#9cb3a6">{{ rDuesNote }}</div></div>
+                  <button onClick="{{ goRPay }}" style="background:#34e08a;color:#06140d;border:none;border-radius:10px;padding:9px 14px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">{{ rPayCta }}</button>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+                <button onClick="{{ goRVisitors }}" style="text-align:left;background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;cursor:pointer;color:#e9f1ec;font-family:inherit"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">qr_code_2</span><div style="font-size:13px;font-weight:600;margin-top:8px">Invite guest</div></button>
+                <button onClick="{{ goRCommunity }}" style="text-align:left;background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;cursor:pointer;color:#e9f1ec;font-family:inherit"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">how_to_vote</span><div style="font-size:13px;font-weight:600;margin-top:8px">Community poll</div></button>
+                <button onClick="{{ goRCommunity }}" style="text-align:left;background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;cursor:pointer;color:#e9f1ec;font-family:inherit"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">campaign</span><div style="font-size:13px;font-weight:600;margin-top:8px">Announcements</div></button>
+                <button onClick="{{ openPanic }}" style="text-align:left;background:#2a1414;border:1px solid rgba(255,93,93,.3);border-radius:14px;padding:13px;cursor:pointer;color:#ffd5d5;font-family:inherit;animation:hkpulse 2.4s ease-in-out infinite"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#ff5d5d">sos</span><div style="font-size:13px;font-weight:600;margin-top:8px">Panic alert</div></button>
+              </div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Latest announcement</div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px;margin-bottom:18px">
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#34e08a">campaign</span><span style="font-size:13px;font-weight:600">{{ topAnnounce.title }}</span></div>
+                <div style="font-size:12px;color:#9cb3a6;line-height:1.5">{{ topAnnounce.body }}</div>
+              </div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Your recent invites</div>
+              <sc-for list="{{ rInvites }}" as="iv" hint-placeholder-count="1">
+                <div style="display:flex;align-items:center;gap:11px;background:#13211a;border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:12px;margin-bottom:9px">
+                  <div style="width:34px;height:34px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#7ff0b6">confirmation_number</span></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:600">{{ iv.name }}</div><div style="font-size:11px;color:#8da093">{{ iv.typeLabel }} · {{ iv.when }}</div></div>
+                  <span style="font-family:'Space Grotesk';font-size:13px;font-weight:600;color:#34e08a">{{ iv.code }}</span>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== RESIDENT VISITORS ===== -->
+            <sc-if value="{{ isRVisitors }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Invite a guest</div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px;margin-bottom:18px">
+                <div style="font-size:12px;color:#8da093;margin-bottom:8px">Guest or vendor name</div>
+                <input value="{{ inviteName }}" onInput="{{ setInviteName }}" placeholder="e.g. Adebayo Group" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px">
+                <div style="display:flex;gap:8px;margin-bottom:14px">
+                  <button onClick="{{ setSingle }}" style="flex:1;padding:9px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;border:1px solid {{ singleBorder }};background:{{ singleBg }};color:{{ singleColor }}">Single use</button>
+                  <button onClick="{{ setMulti }}" style="flex:1;padding:9px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;border:1px solid {{ multiBorder }};background:{{ multiBg }};color:{{ multiColor }}">Multi use</button>
+                </div>
+                <button onClick="{{ createInvite }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:12px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font-family:'Material Symbols Rounded';font-size:19px">qr_code_2</span>Generate code</button>
+              </div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Active invitations</div>
+              <sc-for list="{{ rInvites }}" as="iv" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:11px;background:#13211a;border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:12px;margin-bottom:9px">
+                  <div style="width:36px;height:36px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#7ff0b6">confirmation_number</span></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:600">{{ iv.name }}</div><div style="font-size:11px;color:#8da093">{{ iv.typeLabel }} · {{ iv.when }}</div></div>
+                  <span style="font-family:'Space Grotesk';font-size:13px;font-weight:600;color:#34e08a;letter-spacing:.04em">{{ iv.code }}</span>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== RESIDENT PAY ===== -->
+            <sc-if value="{{ isRPay }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Facility dues</div>
+              <sc-if value="{{ rNotPaid }}" hint-placeholder-val="{{ true }}">
+                <div style="background:linear-gradient(150deg,#123a28,#0d2a1d);border:1px solid rgba(52,224,138,.2);border-radius:18px;padding:18px;margin-bottom:16px">
+                  <div style="font-size:12px;color:#8fd9b3;margin-bottom:6px">OUTSTANDING BALANCE</div>
+                  <div style="font-family:'Space Grotesk';font-size:32px;font-weight:700">{{ rBalanceLabel }}</div>
+                  <div style="font-size:12px;color:#9cb3a6;margin-bottom:16px">Due 30 June 2026</div>
+                  <button onClick="{{ payDues }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:13px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit">Pay now</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ rPaid }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#123a28;border:1px solid rgba(52,224,138,.3);border-radius:18px;padding:24px 18px;margin-bottom:16px;text-align:center">
+                  <div style="width:54px;height:54px;border-radius:50%;background:#34e08a;display:grid;place-items:center;margin:0 auto 12px"><span style="font-family:'Material Symbols Rounded';font-size:30px;color:#06140d">check</span></div>
+                  <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600">Dues fully paid</div>
+                  <div style="font-size:12px;color:#9cb3a6;margin-top:4px">Receipt sent to your email</div>
+                </div>
+              </sc-if>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Payment history</div>
+              <sc-for list="{{ payHistory }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+                  <div><div style="font-size:13px">{{ p.label }}</div><div style="font-size:11px;color:#8da093">{{ p.date }}</div></div>
+                  <div style="text-align:right"><div style="font-size:13px;font-weight:600">{{ p.amt }}</div><div style="font-size:11px;color:#34e08a">Paid</div></div>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== RESIDENT COMMUNITY ===== -->
+            <sc-if value="{{ isRCommunity }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Community</div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:10px">Active polls</div>
+              <sc-for list="{{ polls }}" as="poll" hint-placeholder-count="2">
+                <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:15px;padding:15px;margin-bottom:12px">
+                  <div style="font-size:14px;font-weight:600;margin-bottom:12px">{{ poll.q }}</div>
+                  <sc-for list="{{ poll.options }}" as="opt" hint-placeholder-count="2">
+                    <button onClick="{{ opt.onVote }}" style="display:block;width:100%;text-align:left;background:none;border:none;cursor:{{ opt.cursor }};padding:0;margin-bottom:9px;font-family:inherit">
+                      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;color:{{ opt.labelColor }}"><span>{{ opt.label }}</span><span>{{ opt.pctLabel }}</span></div>
+                      <div style="height:8px;border-radius:5px;background:#0c1813;overflow:hidden">{{ opt.fill }}</div>
+                    </button>
+                  </sc-for>
+                  <div style="font-size:11px;color:#8da093;margin-top:4px">{{ poll.totalLabel }}</div>
+                </div>
+              </sc-for>
+              <div style="font-size:13px;font-weight:600;margin:18px 0 10px">Announcements</div>
+              <sc-for list="{{ announcements }}" as="a" hint-placeholder-count="2">
+                <div style="background:#13211a;border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:13px;margin-bottom:9px">
+                  <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:5px"><span style="font-size:13px;font-weight:600">{{ a.title }}</span><span style="font-size:11px;color:#8da093;white-space:nowrap">{{ a.time }}</span></div>
+                  <div style="font-size:12px;color:#9cb3a6;line-height:1.5">{{ a.body }}</div>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== MANAGER HOME ===== -->
+            <sc-if value="{{ isMHome }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(150deg,#123a28,#0d2a1d);border:1px solid rgba(52,224,138,.2);border-radius:18px;padding:16px;margin-bottom:16px">
+                <div style="font-size:12px;color:#8fd9b3;font-weight:500;margin-bottom:12px">TODAY AT A GLANCE</div>
+                <div style="display:flex;justify-content:space-between;text-align:center">
+                  <div><div style="font-family:'Space Grotesk';font-size:22px;font-weight:700">248</div><div style="font-size:11px;color:#9cb3a6">Residents</div></div>
+                  <div style="width:1px;background:rgba(255,255,255,.1)"></div>
+                  <div><div style="font-family:'Space Grotesk';font-size:22px;font-weight:700;color:#34e08a">{{ mGateCount }}</div><div style="font-size:11px;color:#9cb3a6">At gate</div></div>
+                  <div style="width:1px;background:rgba(255,255,255,.1)"></div>
+                  <div><div style="font-family:'Space Grotesk';font-size:22px;font-weight:700;color:#ffb84d">{{ mOpenIssues }}</div><div style="font-size:11px;color:#9cb3a6">Open issues</div></div>
+                </div>
+              </div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:15px;margin-bottom:18px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:13px;font-weight:600">Dues collected · June</span><span style="font-size:12px;color:#8da093">{{ mDuesPct }}%</span></div>
+                <div style="height:9px;border-radius:6px;background:#0c1813;overflow:hidden;margin-bottom:8px">{{ mDuesFill }}</div>
+                <div style="font-size:12px;color:#9cb3a6">{{ mDuesLabel }}</div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px"><span style="font-size:13px;font-weight:600">Pending resident approvals</span><span onClick="{{ goMResidents }}" style="font-size:12px;color:#34e08a;cursor:pointer">View all</span></div>
+              <sc-if value="{{ mHasPendingRes }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;margin-bottom:18px">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px"><div style="width:34px;height:34px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9cb3a6">person_add</span></div><div style="flex:1"><div style="font-size:13px;font-weight:600">{{ mFirstRes.name }}</div><div style="font-size:11px;color:#8da093">{{ mFirstRes.flat }}</div></div></div>
+                  <div style="display:flex;gap:8px"><button onClick="{{ mFirstRes.approve }}" style="flex:1;background:#34e08a;color:#06140d;border:none;border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Approve</button><button onClick="{{ mFirstRes.reject }}" style="flex:1;background:transparent;color:#ff8a8a;border:1px solid rgba(255,93,93,.3);border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Reject</button></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ mNoPendingRes }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#13211a;border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;margin-bottom:18px;color:#8da093;font-size:13px">No residents waiting for approval.</div>
+              </sc-if>
+            </sc-if>
+
+            <!-- ===== MANAGER RESIDENTS ===== -->
+            <sc-if value="{{ isMResidents }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Residents</div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Awaiting approval</div>
+              <sc-if value="{{ mHasPendingRes }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ pendingResidents }}" as="r" hint-placeholder-count="2">
+                  <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;margin-bottom:10px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px"><div style="width:34px;height:34px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9cb3a6">person_add</span></div><div style="flex:1"><div style="font-size:13px;font-weight:600">{{ r.name }}</div><div style="font-size:11px;color:#8da093">{{ r.flat }}</div></div></div>
+                    <div style="display:flex;gap:8px"><button onClick="{{ r.approve }}" style="flex:1;background:#34e08a;color:#06140d;border:none;border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Approve</button><button onClick="{{ r.reject }}" style="flex:1;background:transparent;color:#ff8a8a;border:1px solid rgba(255,93,93,.3);border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Reject</button></div>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ mNoPendingRes }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#13211a;border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;margin-bottom:8px;color:#8da093;font-size:13px">All caught up.</div>
+              </sc-if>
+              <div style="font-size:13px;font-weight:600;margin:16px 0 9px">Approved residents</div>
+              <sc-for list="{{ approvedResidents }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)"><div style="width:32px;height:32px;border-radius:50%;background:#1e3327;display:grid;place-items:center;font-size:12px;font-weight:600;color:#7ff0b6">{{ r.initials }}</div><div style="flex:1"><div style="font-size:13px">{{ r.name }}</div><div style="font-size:11px;color:#8da093">{{ r.flat }}</div></div><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#34e08a">verified</span></div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== MANAGER GATE ===== -->
+            <sc-if value="{{ isMGate }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 4px">Gate control</div>
+              <div style="font-size:12px;color:#8da093;margin-bottom:14px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:#34e08a;display:inline-block"></span>Main Entrance · live</div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Waiting for approval</div>
+              <sc-if value="{{ hasPending }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ pending }}" as="g" hint-placeholder-count="2">
+                  <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;margin-bottom:10px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px"><div style="width:34px;height:34px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9cb3a6">person</span></div><div style="flex:1"><div style="font-size:13px;font-weight:600">{{ g.name }}</div><div style="font-size:11px;color:#8da093">{{ g.host }} · {{ g.time }}</div></div></div>
+                    <div style="display:flex;gap:8px"><button onClick="{{ g.allow }}" style="flex:1;background:#34e08a;color:#06140d;border:none;border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Allow in</button><button onClick="{{ g.deny }}" style="flex:1;background:transparent;color:#ff8a8a;border:1px solid rgba(255,93,93,.3);border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Deny</button></div>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ noPending }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#13211a;border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;margin-bottom:8px;color:#8da093;font-size:13px">All clear. No one is waiting at the gate.</div>
+              </sc-if>
+              <div style="font-size:13px;font-weight:600;margin:16px 0 9px">Access log</div>
+              <sc-for list="{{ accessLog }}" as="l" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)"><div style="width:30px;height:30px;border-radius:9px;background:{{ l.bg }};display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:17px;color:{{ l.color }}">{{ l.icon }}</span></div><div style="flex:1"><div style="font-size:13px">{{ l.name }}</div><div style="font-size:11px;color:#8da093">{{ l.dirLabel }}</div></div><span style="font-size:11px;color:#8da093">{{ l.time }}</span></div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== MANAGER ISSUES ===== -->
+            <sc-if value="{{ isMIssues }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Complaints</div>
+              <sc-for list="{{ complaints }}" as="c" hint-placeholder-count="3">
+                <div style="background:#13211a;border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:13px;margin-bottom:10px">
+                  <div style="display:flex;align-items:start;justify-content:space-between;gap:10px;margin-bottom:10px"><div><div style="font-size:13px;font-weight:600">{{ c.title }}</div><div style="font-size:11px;color:#8da093;margin-top:3px">{{ c.from }} · {{ c.time }}</div></div><span style="font-size:10px;font-weight:600;color:{{ c.color }};background:{{ c.bg }};padding:3px 8px;border-radius:6px;white-space:nowrap">{{ c.status }}</span></div>
+                  <sc-if value="{{ c.canAdvance }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ c.advance }}" style="width:100%;background:#16271e;color:#cfe0d6;border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">{{ c.advanceLabel }}</button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== SECURITY HOME / VERIFY ===== -->
+            <sc-if value="{{ isSHome }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(150deg,#123a28,#0d2a1d);border:1px solid rgba(52,224,138,.2);border-radius:18px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:13px">
+                <div style="width:44px;height:44px;border-radius:13px;background:rgba(52,224,138,.15);display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">shield</span></div>
+                <div><div style="font-size:13px;font-weight:600">Main Entrance</div><div style="font-size:12px;color:#8fd9b3;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#34e08a;display:inline-block"></span>On duty · shift ends 6:00 AM</div></div>
+              </div>
+              <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;margin-bottom:10px">Verify visitor code</div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:15px;margin-bottom:16px">
+                <input value="{{ verifyCode }}" onInput="{{ setVerifyCode }}" placeholder="e.g. PK-7QX2" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:13px;color:#e9f1ec;font-size:16px;font-family:'Space Grotesk';letter-spacing:.05em;text-align:center;outline:none;margin-bottom:11px;text-transform:uppercase">
+                <button onClick="{{ verify }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:12px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit">Verify code</button>
+                <div style="font-size:11px;color:#6f8579;text-align:center;margin-top:8px">Try PK-7QX2, PK-4MN8, or PK-9ZK1</div>
+              </div>
+              <sc-if value="{{ verifyValid }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#123a28;border:1px solid rgba(52,224,138,.35);border-radius:15px;padding:16px;margin-bottom:8px;animation:hkslide .3s ease">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="width:40px;height:40px;border-radius:11px;background:#34e08a;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#06140d">check</span></div><div><div style="font-size:14px;font-weight:600;color:#34e08a">Valid invitation</div><div style="font-size:12px;color:#cfe0d6">{{ verifyName }} · host {{ verifyHost }}</div></div></div>
+                  <button onClick="{{ logEntry }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:12px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit">Log entry &amp; open gate</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ verifyInvalid }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#2a1414;border:1px solid rgba(255,93,93,.35);border-radius:15px;padding:16px;margin-bottom:8px;animation:hkslide .3s ease;display:flex;align-items:center;gap:10px">
+                  <div style="width:40px;height:40px;border-radius:11px;background:#ff5d5d;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#2a1414">close</span></div>
+                  <div><div style="font-size:14px;font-weight:600;color:#ff8a8a">Code not recognised</div><div style="font-size:12px;color:#cfe0d6">Do not grant entry. Ask the guest to confirm with their host.</div></div>
+                </div>
+              </sc-if>
+            </sc-if>
+
+            <!-- ===== SECURITY LOG ===== -->
+            <sc-if value="{{ isSLog }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 4px">Access log</div>
+              <div style="font-size:12px;color:#8da093;margin-bottom:14px">{{ logCountLabel }}</div>
+              <sc-for list="{{ accessLog }}" as="l" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)"><div style="width:34px;height:34px;border-radius:10px;background:{{ l.bg }};display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:{{ l.color }}">{{ l.icon }}</span></div><div style="flex:1"><div style="font-size:13px;font-weight:600">{{ l.name }}</div><div style="font-size:11px;color:#8da093">{{ l.dirLabel }}</div></div><span style="font-size:11px;color:#8da093">{{ l.time }}</span></div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ===== SECURITY ALERTS ===== -->
+            <sc-if value="{{ isSAlerts }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Panic alerts</div>
+              <sc-if value="{{ hasAlerts }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ panicAlerts }}" as="al" hint-placeholder-count="1">
+                  <div style="background:#2a1414;border:1px solid rgba(255,93,93,.3);border-radius:15px;padding:15px;margin-bottom:11px;animation:hkpulse 2s ease-in-out infinite">
+                    <div style="display:flex;align-items:center;gap:11px;margin-bottom:12px"><div style="width:40px;height:40px;border-radius:12px;background:#ff5d5d;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:23px;color:#2a1414">sos</span></div><div style="flex:1"><div style="font-size:14px;font-weight:600;color:#ff8a8a">Emergency at {{ al.flat }}</div><div style="font-size:11px;color:#cfe0d6">{{ al.time }} · respond immediately</div></div></div>
+                    <button onClick="{{ al.ack }}" style="width:100%;background:#ff5d5d;color:#2a1414;border:none;border-radius:11px;padding:11px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit">Acknowledge &amp; respond</button>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ noAlerts }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#123a28;border:1px solid rgba(52,224,138,.25);border-radius:15px;padding:24px 16px;text-align:center;color:#9cb3a6;font-size:13px"><span style="font-family:'Material Symbols Rounded';font-size:34px;color:#34e08a;display:block;margin-bottom:8px">verified_user</span>All quiet. No active emergencies.</div>
+              </sc-if>
+            </sc-if>
+
+            <!-- ===== PROFILE (shared) ===== -->
+            <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:10px 0 18px">
+                <div style="width:74px;height:74px;border-radius:50%;background:linear-gradient(150deg,#1e3327,#34e08a);display:grid;place-items:center;margin:0 auto 12px;font-family:'Space Grotesk';font-size:26px;font-weight:700;color:#06140d">{{ profileInitials }}</div>
+                <div style="font-family:'Space Grotesk';font-size:19px;font-weight:600">{{ profileName }}</div>
+                <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(52,224,138,.12);border:1px solid rgba(52,224,138,.25);border-radius:999px;padding:4px 11px;margin-top:8px"><span style="font-family:'Material Symbols Rounded';font-size:15px;color:#34e08a">{{ regRoleIcon }}</span><span style="font-size:12px;color:#7ff0b6;font-weight:600">{{ regRoleLabel }}</span></div>
+                <div style="font-size:12px;color:#8da093;margin-top:8px">Parkview Estate · Lagos</div>
+              </div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:15px;overflow:hidden;margin-bottom:16px">
+                <sc-for list="{{ profileRows }}" as="row" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:13px;padding:14px 15px;border-bottom:1px solid rgba(255,255,255,.05)"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#9cb3a6">{{ row.icon }}</span><span style="flex:1;font-size:14px">{{ row.label }}</span><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#6f8579">chevron_right</span></div>
+                </sc-for>
+              </div>
+              <button onClick="{{ signOut }}" style="width:100%;background:#2a1414;color:#ff8a8a;border:1px solid rgba(255,93,93,.25);border-radius:13px;padding:13px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit">Sign out</button>
+            </sc-if>
+
+          </div>
+
+          <!-- bottom nav -->
+          <div style="position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:9px 6px 14px;background:rgba(8,18,14,.92);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.06)">
+            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+              <button onClick="{{ n.onClick }}" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ n.color }};font-family:inherit;padding:2px 4px;flex:1">
+                <span style="font-family:'Material Symbols Rounded';font-size:22px;font-variation-settings:'FILL' {{ n.fill }}">{{ n.icon }}</span>
+                <span style="font-size:9.5px;font-weight:500">{{ n.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <!-- PANIC overlay -->
+          <sc-if value="{{ panicOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:rgba(6,12,9,.93);backdrop-filter:blur(6px);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center">
+              <button onClick="{{ closePanic }}" style="position:absolute;top:16px;right:16px;background:#16271e;border:1px solid rgba(255,255,255,.1);width:34px;height:34px;border-radius:50%;cursor:pointer;color:#aebcb3;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:20px">close</span></button>
+              <div style="font-family:'Space Grotesk';font-size:21px;font-weight:600;margin-bottom:6px">{{ panicTitle }}</div>
+              <div style="font-size:13px;color:#aebcb3;margin-bottom:30px;max-width:230px">{{ panicSub }}</div>
+              {{ panicDial }}
+            </div>
+          </sc-if>
+
+        </div>
+      </sc-if>
+
+      <!-- toast -->
+      <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;bottom:86px;left:50%;transform:translateX(-50%);background:#1d3327;border:1px solid rgba(52,224,138,.3);color:#cdebd9;font-size:13px;font-weight:500;padding:10px 16px;border-radius:11px;white-space:nowrap;z-index:25;animation:hktoast .25s ease;display:flex;align-items:center;gap:8px">
+          <span style="font-family:'Material Symbols Rounded';font-size:18px;color:#34e08a">check_circle</span>{{ toast }}
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <button onClick="{{ resetApp }}" style="margin-top:24px;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8da093;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit"><span style="font-family:'Material Symbols Rounded';font-size:17px">restart_alt</span>Restart prototype</button>
+  <a href="Homekeep.dc.html" style="margin-top:12px;font-size:13px;color:#6f8579;text-decoration:none">← Back to landing page</a>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    view: 'splash', role: null, regStep: 'type', regRole: null, screen: 'home',
+    loginEmail: '', loginPass: '',
+    regName: '', regEmail: '', regEstate: '', regPass: '',
+    inviteName: '', inviteType: 'single',
+    rInvites: [{ name: 'Adebayo Group', type: 'multi', code: 'PK-7QX2', when: 'Today, 2:30 PM' }],
+    sharedCodes: { 'PK-7QX2': 'Adebayo Group', 'PK-4MN8': 'DHL Courier', 'PK-9ZK1': 'Jumia Delivery' },
+    rBalance: 45000, rPaid: false,
+    polls: [
+      { q: 'Should we install solar street lights?', options: [{ label: 'Yes, proceed', votes: 42 }, { label: 'Not this year', votes: 8 }], voted: null },
+      { q: 'Preferred gate operating hours?', options: [{ label: '6:00 AM – 10:00 PM', votes: 31 }, { label: 'Open 24 hours', votes: 24 }], voted: null },
+    ],
+    announcements: [
+      { title: 'Estate AGM this Saturday', body: 'Join us at 10:00 AM in the clubhouse. Light refreshments provided.', time: '2h ago' },
+      { title: 'Water supply maintenance', body: 'Mains will be off Sunday 8:00 AM – 12:00 PM. Store water ahead.', time: 'Yesterday' },
+    ],
+    pendingResidents: [
+      { id: 1, name: 'Funke Adeyemi', flat: 'Block D · Flat 7' },
+      { id: 2, name: 'Ibrahim Sani', flat: 'Block A · Flat 3' },
+    ],
+    approvedResidents: [
+      { name: 'Tunde Bakare', flat: 'Block C · Flat 4B' },
+      { name: 'Ngozi Eze', flat: 'Block B · Flat 12' },
+      { name: 'Yusuf Lawal', flat: 'Block A · Flat 9' },
+    ],
+    gate: [
+      { id: 1, name: 'Chinedu Okafor', host: 'Block C · Flat 4', time: 'just now', status: 'pending' },
+      { id: 2, name: 'Glovo Rider', host: 'Block A · Flat 12', time: '2 min ago', status: 'pending' },
+    ],
+    accessLog: [
+      { name: 'Mrs. Bello', dir: 'in', time: '1:12 PM' },
+      { name: 'Uche (Flat 9)', dir: 'out', time: '12:55 PM' },
+      { name: 'Water vendor', dir: 'in', time: '12:30 PM' },
+      { name: 'Mr. Danjuma', dir: 'out', time: '11:48 AM' },
+    ],
+    complaints: [
+      { id: 1, title: 'Street light out on Block B walkway', from: 'Flat 12', status: 'Open', time: '2h ago' },
+      { id: 2, title: 'Refuse not collected on Crescent 2', from: 'Flat 7', status: 'In progress', time: 'Yesterday' },
+      { id: 3, title: 'Borehole pump making noise', from: 'Flat 3', status: 'Resolved', time: '3 days ago' },
+    ],
+    verifyCode: '', verifyResult: null,
+    panicAlerts: [{ flat: 'Block C · Flat 9', time: '4 min ago' }],
+    panicOpen: false, panic: 'idle', panicPct: 0,
+    toast: null,
+  };
+
+  homeFor = (r) => (r === 'resident' ? 'rhome' : r === 'manager' ? 'mhome' : 'shome');
+  flash = (m) => { this.setState({ toast: m }); clearTimeout(this._t2); this._t2 = setTimeout(() => this.setState({ toast: null }), 2400); };
+
+  start = () => this.setState({ view: 'register', regStep: 'type' });
+  gotoLogin = () => this.setState({ view: 'login' });
+  gotoSplash = () => this.setState({ view: 'splash' });
+  pickRegRole = (r) => this.setState({ regRole: r, regStep: 'form' });
+  backRegType = () => this.setState({ regStep: 'type' });
+  submitRegister = () => { const r = this.state.regRole || 'resident'; this.setState({ role: r, view: 'app', screen: this.homeFor(r) }); };
+  quickLogin = (r) => this.setState({ role: r, view: 'app', screen: this.homeFor(r) });
+  submitLogin = () => { this.setState({ role: 'resident', view: 'app', screen: 'rhome' }); };
+  signOut = () => this.resetApp();
+  resetApp = () => { clearInterval(this._t); this.setState({ view: 'splash', role: null, regStep: 'type', regRole: null, screen: 'home', verifyResult: null, verifyCode: '', panicOpen: false, panic: 'idle', panicPct: 0, loginEmail: '', loginPass: '', regName: '', regEmail: '', regEstate: '', regPass: '' }); };
+  go = (s) => this.setState({ screen: s, panicOpen: false });
+
+  setLoginEmail = (e) => this.setState({ loginEmail: e.target.value });
+  setLoginPass = (e) => this.setState({ loginPass: e.target.value });
+  setRegName = (e) => this.setState({ regName: e.target.value });
+  setRegEmail = (e) => this.setState({ regEmail: e.target.value });
+  setRegEstate = (e) => this.setState({ regEstate: e.target.value });
+  setRegPass = (e) => this.setState({ regPass: e.target.value });
+
+  setInviteName = (e) => this.setState({ inviteName: e.target.value });
+  setSingle = () => this.setState({ inviteType: 'single' });
+  setMulti = () => this.setState({ inviteType: 'multi' });
+  createInvite = () => {
+    const name = (this.state.inviteName || '').trim() || 'Guest';
+    const code = 'PK-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+    const inv = { name, type: this.state.inviteType, code, when: 'Just now' };
+    this.setState((s) => ({ rInvites: [inv, ...s.rInvites], sharedCodes: { ...s.sharedCodes, [code]: name }, inviteName: '' }));
+    this.flash('Invitation ' + code + ' created');
+  };
+
+  payDues = () => { this.setState({ rBalance: 0, rPaid: true }); this.flash('Dues paid · ₦45,000'); };
+
+  vote = (pi, oi) => {
+    this.setState((s) => {
+      const polls = s.polls.map((p, i) => {
+        if (i !== pi || p.voted !== null) return p;
+        return { ...p, voted: oi, options: p.options.map((o, j) => (j === oi ? { ...o, votes: o.votes + 1 } : o)) };
+      });
+      return { polls };
+    });
+    this.flash('Vote recorded');
+  };
+
+  approveRes = (id) => { this.setState((s) => ({ pendingResidents: s.pendingResidents.filter((r) => r.id !== id) })); this.flash('Resident approved'); };
+  rejectRes = (id) => { this.setState((s) => ({ pendingResidents: s.pendingResidents.filter((r) => r.id !== id) })); this.flash('Request rejected'); };
+
+  allow = (id) => { this.setState((s) => ({ gate: s.gate.filter((g) => g.id !== id), accessLog: [{ name: (s.gate.find((g) => g.id === id) || {}).name || 'Visitor', dir: 'in', time: 'Just now' }, ...s.accessLog] })); this.flash('Visitor allowed in'); };
+  deny = (id) => { this.setState((s) => ({ gate: s.gate.filter((g) => g.id !== id) })); this.flash('Visitor denied'); };
+
+  advance = (id) => {
+    const order = ['Open', 'In progress', 'Resolved'];
+    this.setState((s) => ({ complaints: s.complaints.map((c) => { if (c.id !== id) return c; const i = order.indexOf(c.status); return { ...c, status: order[Math.min(i + 1, 2)] }; }) }));
+    this.flash('Complaint updated');
+  };
+
+  setVerifyCode = (e) => this.setState({ verifyCode: e.target.value, verifyResult: null });
+  verify = () => {
+    const code = (this.state.verifyCode || '').trim().toUpperCase();
+    if (!code) return;
+    const name = this.state.sharedCodes[code];
+    this.setState({ verifyResult: name ? { status: 'valid', name } : { status: 'invalid' } });
+  };
+  logEntry = () => {
+    const name = (this.state.verifyResult || {}).name || 'Visitor';
+    this.setState((s) => ({ accessLog: [{ name, dir: 'in', time: 'Just now' }, ...s.accessLog], verifyResult: null, verifyCode: '' }));
+    this.flash('Entry logged · gate opened');
+  };
+  ackAlert = (i) => { this.setState((s) => ({ panicAlerts: s.panicAlerts.filter((_, j) => j !== i) })); this.flash('Responding to alert'); };
+
+  openPanic = () => this.setState({ panicOpen: true });
+  closePanic = () => { clearInterval(this._t); this.setState({ panicOpen: false, panic: 'idle', panicPct: 0 }); };
+  startPanic = () => {
+    if (this.state.panic !== 'idle') return;
+    this.setState({ panic: 'arming' });
+    this._t = setInterval(() => {
+      this.setState((s) => {
+        const p = Math.min(100, s.panicPct + 5);
+        if (p >= 100) { clearInterval(this._t); return { panicPct: 100, panic: 'sent', panicAlerts: [{ flat: 'Block C · Flat 4B', time: 'just now' }, ...s.panicAlerts] }; }
+        return { panicPct: p };
+      });
+    }, 32);
+  };
+  cancelPanic = () => { if (this.state.panic === 'arming') { clearInterval(this._t); this.setState({ panic: 'idle', panicPct: 0 }); } };
+
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._t2); }
+
+  renderVals() {
+    const { view, role, screen } = this.state;
+    const roleDefs = [
+      { key: 'resident', label: 'Resident', icon: 'home', sub: 'Homeowner or tenant', desc: 'Invite guests, pay dues, raise issues and vote.' },
+      { key: 'manager', label: 'Estate manager', icon: 'admin_panel_settings', sub: 'Community admin', desc: 'Approve residents, manage the gate, dues and complaints.' },
+      { key: 'security', label: 'Security officer', icon: 'shield', sub: 'Gatekeeper', desc: 'Verify visitor codes, log entries and respond to alerts.' },
+    ];
+    const roleChips = roleDefs.map((r) => ({ ...r, onClick: () => this.quickLogin(r.key), onPick: () => this.pickRegRole(r.key) }));
+    const curRoleDef = roleDefs.find((r) => r.key === role) || roleDefs[0];
+    const regRoleDef = roleDefs.find((r) => r.key === this.state.regRole) || roleDefs[0];
+
+    // nav per role
+    const navDefs = {
+      resident: [
+        { key: 'rhome', label: 'Home', icon: 'home' },
+        { key: 'rvisitors', label: 'Invite', icon: 'qr_code_2' },
+        { key: 'rpay', label: 'Dues', icon: 'account_balance_wallet' },
+        { key: 'rcommunity', label: 'Community', icon: 'forum' },
+        { key: 'profile', label: 'Me', icon: 'person' },
+      ],
+      manager: [
+        { key: 'mhome', label: 'Home', icon: 'home' },
+        { key: 'mresidents', label: 'Residents', icon: 'group' },
+        { key: 'mgate', label: 'Gate', icon: 'shield' },
+        { key: 'missues', label: 'Issues', icon: 'flag' },
+        { key: 'profile', label: 'Me', icon: 'person' },
+      ],
+      security: [
+        { key: 'shome', label: 'Verify', icon: 'qr_code_scanner' },
+        { key: 'slog', label: 'Log', icon: 'list_alt' },
+        { key: 'salerts', label: 'Alerts', icon: 'sos' },
+        { key: 'profile', label: 'Me', icon: 'person' },
+      ],
+    };
+    const navItems = (navDefs[role] || navDefs.resident).map((n) => ({
+      ...n, color: screen === n.key ? '#34e08a' : '#6f8579', fill: screen === n.key ? 1 : 0, onClick: () => this.go(n.key),
+    }));
+
+    const headerMap = {
+      resident: { sub: 'Parkview Estate · Flat 4B', title: 'Hi, Tunde' },
+      manager: { sub: 'Parkview Estate', title: 'Good evening, Manager' },
+      security: { sub: 'Parkview Estate · Main Gate', title: 'Officer on duty' },
+    };
+    const head = headerMap[role] || headerMap.resident;
+
+    // resident
+    const segOn = { b: 'rgba(52,224,138,.4)', g: 'rgba(52,224,138,.14)', c: '#34e08a' };
+    const segOff = { b: 'rgba(255,255,255,.1)', g: 'transparent', c: '#9cb3a6' };
+    const single = this.state.inviteType === 'single';
+    const s1 = single ? segOn : segOff, s2 = single ? segOff : segOn;
+    const rInvites = this.state.rInvites.map((iv) => ({ ...iv, typeLabel: iv.type === 'multi' ? 'Multi-use' : 'Single-use' }));
+
+    const polls = this.state.polls.map((p, pi) => {
+      const total = p.options.reduce((a, o) => a + o.votes, 0);
+      return {
+        q: p.q, totalLabel: total + ' votes' + (p.voted !== null ? ' · you voted' : ''),
+        options: p.options.map((o, oi) => {
+          const pct = total ? Math.round((o.votes / total) * 100) : 0;
+          const isChoice = p.voted === oi;
+          return {
+            label: o.label, pctLabel: p.voted !== null ? pct + '%' : '',
+            cursor: p.voted === null ? 'pointer' : 'default',
+            labelColor: isChoice ? '#34e08a' : '#cfe0d6',
+            onVote: () => this.vote(pi, oi),
+            fill: React.createElement('div', { style: { height: '100%', width: (p.voted !== null ? pct : 0) + '%', background: isChoice ? '#34e08a' : '#2a6f4d', borderRadius: 5, transition: 'width .4s ease' } }),
+          };
+        }),
+      };
+    });
+
+    // manager
+    const pendingRes = this.state.pendingResidents.map((r) => ({ ...r, approve: () => this.approveRes(r.id), reject: () => this.rejectRes(r.id) }));
+    const approvedResidents = this.state.approvedResidents.map((r) => ({ ...r, initials: r.name.split(' ').map((w) => w[0]).slice(0, 2).join('') }));
+    const pending = this.state.gate.filter((g) => g.status === 'pending').map((g) => ({ ...g, allow: () => this.allow(g.id), deny: () => this.deny(g.id) }));
+    const stStyle = (s) => s === 'Resolved' ? { color: '#34e08a', bg: 'rgba(52,224,138,.12)' } : s === 'In progress' ? { color: '#ffb84d', bg: 'rgba(255,184,77,.12)' } : { color: '#7fb4ff', bg: 'rgba(127,180,255,.12)' };
+    const complaints = this.state.complaints.map((c) => ({ ...c, ...stStyle(c.status), canAdvance: c.status !== 'Resolved', advanceLabel: c.status === 'Open' ? 'Start working on it' : 'Mark as resolved', advance: () => this.advance(c.id) }));
+    const openIssues = this.state.complaints.filter((c) => c.status !== 'Resolved').length;
+    const duesPct = 78;
+
+    const logFmt = (l) => ({ ...l, dirLabel: l.dir === 'in' ? 'Entered · Main gate' : 'Exited · Main gate', icon: l.dir === 'in' ? 'login' : 'logout', color: l.dir === 'in' ? '#7ff0b6' : '#9cb3a6', bg: l.dir === 'in' ? '#16271e' : '#1a2520' });
+    const accessLog = this.state.accessLog.map(logFmt);
+
+    const vr = this.state.verifyResult;
+    const panicSent = this.state.panic === 'sent';
+    const pct = this.state.panicPct;
+    const panicDial = React.createElement('div', {
+      onMouseDown: this.startPanic, onMouseUp: this.cancelPanic, onMouseLeave: this.cancelPanic,
+      onTouchStart: this.startPanic, onTouchEnd: this.cancelPanic,
+      style: { width: 188, height: 188, borderRadius: '50%', cursor: panicSent ? 'default' : 'pointer', userSelect: 'none', WebkitTapHighlightColor: 'transparent', background: `conic-gradient(${panicSent ? '#34e08a' : '#ff5d5d'} ${pct * 3.6}deg, rgba(255,93,93,.15) 0deg)`, display: 'grid', placeItems: 'center', transition: 'background .05s linear' },
+    }, React.createElement('div', { style: { width: 152, height: 152, borderRadius: '50%', background: panicSent ? '#10271b' : '#2a1414', border: `1px solid ${panicSent ? 'rgba(52,224,138,.45)' : 'rgba(255,93,93,.4)'}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 7 } },
+      React.createElement('span', { style: { fontFamily: "'Material Symbols Rounded'", fontSize: 48, color: panicSent ? '#34e08a' : '#ff5d5d' } }, panicSent ? 'check' : 'sos'),
+      React.createElement('span', { style: { fontSize: 13, fontWeight: 600, color: panicSent ? '#34e08a' : '#ff9a9a' } }, panicSent ? 'Alert sent' : (pct > 0 ? 'Hold…' : 'Hold')),
+    ));
+
+    const profileRows = [
+      { icon: 'notifications', label: 'Notifications' },
+      { icon: 'lock', label: 'Privacy & security' },
+      { icon: 'help', label: 'Help & support' },
+      { icon: 'info', label: 'About Homekeep' },
+    ];
+
+    return {
+      showSplash: view === 'splash', showLogin: view === 'login',
+      showRegType: view === 'register' && this.state.regStep === 'type',
+      showRegForm: view === 'register' && this.state.regStep === 'form',
+      isApp: view === 'app',
+      start: this.start, gotoLogin: this.gotoLogin, gotoSplash: this.gotoSplash,
+      backRegType: this.backRegType, submitRegister: this.submitRegister, submitLogin: this.submitLogin,
+      signOut: this.signOut, resetApp: this.resetApp,
+      roleChips,
+      loginEmail: this.state.loginEmail, setLoginEmail: this.setLoginEmail, loginPass: this.state.loginPass, setLoginPass: this.setLoginPass,
+      regName: this.state.regName, setRegName: this.setRegName, regEmail: this.state.regEmail, setRegEmail: this.setRegEmail,
+      regEstate: this.state.regEstate, setRegEstate: this.setRegEstate, regPass: this.state.regPass, setRegPass: this.setRegPass,
+      regRoleLabel: regRoleDef.label, regRoleIcon: regRoleDef.icon,
+      estateFieldLabel: this.state.regRole === 'manager' ? 'Estate name' : 'Estate invite code',
+      estateFieldHint: this.state.regRole === 'manager' ? 'e.g. Parkview Estate' : 'e.g. PARK-2026',
+
+      navItems, headerSub: head.sub, headerTitle: head.title,
+
+      isRHome: screen === 'rhome', isRVisitors: screen === 'rvisitors', isRPay: screen === 'rpay', isRCommunity: screen === 'rcommunity',
+      isMHome: screen === 'mhome', isMResidents: screen === 'mresidents', isMGate: screen === 'mgate', isMIssues: screen === 'missues',
+      isSHome: screen === 'shome', isSLog: screen === 'slog', isSAlerts: screen === 'salerts',
+      isProfile: screen === 'profile',
+
+      goRPay: () => this.go('rpay'), goRVisitors: () => this.go('rvisitors'), goRCommunity: () => this.go('rcommunity'),
+      goMResidents: () => this.go('mresidents'),
+
+      rBalanceLabel: '₦' + this.state.rBalance.toLocaleString(),
+      rDuesNote: this.state.rPaid ? 'Fully paid — thank you' : 'Due 30 June 2026',
+      rPayCta: this.state.rPaid ? 'View' : 'Pay',
+      rNotPaid: !this.state.rPaid, rPaid: this.state.rPaid, payDues: this.payDues,
+      payHistory: [
+        { label: 'May facility levy', date: '02 May 2026', amt: '₦45,000' },
+        { label: 'April facility levy', date: '03 Apr 2026', amt: '₦45,000' },
+        { label: 'March facility levy', date: '01 Mar 2026', amt: '₦45,000' },
+      ],
+      rInvites,
+      inviteName: this.state.inviteName, setInviteName: this.setInviteName, createInvite: this.createInvite,
+      setSingle: this.setSingle, setMulti: this.setMulti,
+      singleBorder: s1.b, singleBg: s1.g, singleColor: s1.c, multiBorder: s2.b, multiBg: s2.g, multiColor: s2.c,
+      polls, announcements: this.state.announcements, topAnnounce: this.state.announcements[0],
+      openPanic: this.openPanic,
+
+      mGateCount: pending.length, mOpenIssues: openIssues,
+      mDuesPct: duesPct, mDuesLabel: '₦9.4M of ₦12.0M collected',
+      mDuesFill: React.createElement('div', { style: { height: '100%', width: duesPct + '%', background: '#34e08a', borderRadius: 6 } }),
+      pendingResidents: pendingRes, mHasPendingRes: pendingRes.length > 0, mNoPendingRes: pendingRes.length === 0,
+      mFirstRes: pendingRes[0] || null, approvedResidents,
+      pending, hasPending: pending.length > 0, noPending: pending.length === 0, accessLog,
+      complaints,
+
+      verifyCode: this.state.verifyCode, setVerifyCode: this.setVerifyCode, verify: this.verify, logEntry: this.logEntry,
+      verifyValid: !!vr && vr.status === 'valid', verifyInvalid: !!vr && vr.status === 'invalid',
+      verifyName: vr && vr.name, verifyHost: 'Block C · Flat 4',
+      logCountLabel: accessLog.length + ' movements logged today',
+      panicAlerts: this.state.panicAlerts.map((a, i) => ({ ...a, ack: () => this.ackAlert(i) })),
+      hasAlerts: this.state.panicAlerts.length > 0, noAlerts: this.state.panicAlerts.length === 0,
+
+      panicOpen: this.state.panicOpen, closePanic: this.closePanic, panicDial,
+      panicTitle: panicSent ? 'Security alerted' : 'Emergency alert',
+      panicSub: panicSent ? 'Estate security has been notified and is on the way to your location.' : 'Press and hold the button to alert estate security to your location.',
+
+      profileInitials: curRoleDef.key === 'resident' ? 'TB' : curRoleDef.key === 'manager' ? 'MG' : 'GO',
+      profileName: curRoleDef.key === 'resident' ? 'Tunde Bakare' : curRoleDef.key === 'manager' ? 'Estate Manager' : 'Gate Officer',
+      profileRows,
+
+      toast: this.state.toast, hasToast: !!this.state.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

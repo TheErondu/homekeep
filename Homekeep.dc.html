@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0..1,0&display=block" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0}
+  ::-webkit-scrollbar{width:0;height:0}
+  @keyframes hkfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes hkpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,93,93,.45)}50%{box-shadow:0 0 0 10px rgba(255,93,93,0)}}
+  @keyframes hktoast{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes hkglow{0%,100%{opacity:.55}50%{opacity:.9}}
+</style>
+</helmet>
+
+<div style="background:#081210;color:#e9f1ec;font-family:'Hanken Grotesk',sans-serif;min-height:100vh;overflow-x:hidden">
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,18,16,.72);border-bottom:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:1180px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:9px;background:#34e08a;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;color:#06140d">cottage</span></div>
+        <span style="font-family:'Space Grotesk';font-weight:700;font-size:20px;letter-spacing:-.01em">Homekeep</span>
+      </div>
+      <nav style="display:flex;align-items:center;gap:28px;font-size:15px;color:#aebcb3">
+        <a href="#features" style="color:inherit;text-decoration:none">Features</a>
+        <a href="#why" style="color:inherit;text-decoration:none">Why us</a>
+        <a href="#faq" style="color:inherit;text-decoration:none">FAQ</a>
+        <a href="#waitlist" style="color:inherit;text-decoration:none">Waitlist</a>
+      </nav>
+      <a href="#demo" style="display:flex;align-items:center;gap:7px;background:#34e08a;color:#06140d;font-weight:600;font-size:14px;padding:10px 16px;border-radius:10px;text-decoration:none">Launch demo<span style="font-family:'Material Symbols Rounded';font-size:18px">arrow_forward</span></a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section style="position:relative;max-width:1180px;margin:0 auto;padding:64px 28px 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center">
+    <div style="position:absolute;top:-40px;left:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#16563a,transparent 70%);filter:blur(30px);opacity:.6;animation:hkglow 6s ease-in-out infinite;pointer-events:none"></div>
+    <div style="position:relative">
+      <h1 style="font-family:'Space Grotesk';font-weight:700;font-size:56px;line-height:1.04;letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance">Visitors, security<br>and dues. One app.</h1>
+      <p style="font-size:18px;line-height:1.55;color:#aebcb3;margin:0 0 12px;max-width:480px">Homekeep handles visitor access, gate security, facility dues and community decisions for residential estates, with no hardware required.</p>
+      <p style="font-family:'Space Grotesk';font-size:15px;color:#34e08a;margin:0 0 30px;font-weight:500">Built for landlords. Loved by tenants.</p>
+      <sc-if value="{{ storeBadges }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="#demo" style="display:flex;align-items:center;gap:11px;background:#101c16;border:1px solid rgba(255,255,255,.1);padding:11px 18px;border-radius:12px;text-decoration:none;color:#e9f1ec">
+            <span style="font-family:'Material Symbols Rounded';font-size:26px;color:#34e08a">android</span>
+            <span style="line-height:1.15"><span style="font-size:11px;color:#8da093;display:block">GET IT ON</span><span style="font-size:16px;font-weight:600;font-family:'Space Grotesk'">Google Play</span></span>
+          </a>
+          <a href="#demo" style="display:flex;align-items:center;gap:11px;background:#101c16;border:1px solid rgba(255,255,255,.1);padding:11px 18px;border-radius:12px;text-decoration:none;color:#e9f1ec">
+            <span style="font-family:'Material Symbols Rounded';font-size:26px;color:#34e08a">ios_share</span>
+            <span style="line-height:1.15"><span style="font-size:11px;color:#8da093;display:block">Download on the</span><span style="font-size:16px;font-weight:600;font-family:'Space Grotesk'">App Store</span></span>
+          </a>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- LIVE PHONE -->
+    <div id="demo" style="position:relative;display:flex;justify-content:center;scroll-margin-top:90px">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,#15402c,transparent 65%);filter:blur(30px);opacity:.7;pointer-events:none"></div>
+      <div style="position:relative;width:318px;height:646px;background:#05100b;border:2px solid #1e2c24;border-radius:48px;padding:11px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.03);animation:hkfloat 7s ease-in-out infinite">
+        <div style="position:relative;width:100%;height:100%;background:#0a1611;border-radius:38px;overflow:hidden;display:flex;flex-direction:column">
+
+          <!-- status bar -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 22px 8px;font-size:13px;font-weight:600;color:#cfe0d6;flex:none">
+            <span>9:41</span>
+            <div style="display:flex;gap:5px;align-items:center"><span style="font-family:'Material Symbols Rounded';font-size:16px">signal_cellular_alt</span><span style="font-family:'Material Symbols Rounded';font-size:16px">wifi</span><span style="font-family:'Material Symbols Rounded';font-size:16px">battery_full</span></div>
+          </div>
+
+          <!-- app header -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 18px 12px;flex:none">
+            <div>
+              <div style="font-size:12px;color:#7f968a;font-weight:500">Parkview Estate</div>
+              <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600">Good evening, Manager</div>
+            </div>
+            <div style="position:relative;width:38px;height:38px;border-radius:50%;background:#16271e;display:grid;place-items:center;border:1px solid rgba(255,255,255,.08)">
+              <span style="font-family:'Material Symbols Rounded';font-size:21px;color:#aebcb3">notifications</span>
+              <span style="position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:#ff5d5d"></span>
+            </div>
+          </div>
+
+          <!-- screen content -->
+          <div style="flex:1;overflow-y:auto;padding:4px 18px 96px">
+
+            <!-- HOME -->
+            <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+                <div style="background:linear-gradient(150deg,#123a28,#0d2a1d);border:1px solid rgba(52,224,138,.2);border-radius:18px;padding:16px;margin-bottom:16px">
+                  <div style="font-size:12px;color:#8fd9b3;font-weight:500;margin-bottom:12px">TODAY AT A GLANCE</div>
+                  <div style="display:flex;justify-content:space-between;text-align:center">
+                    <div><div style="font-family:'Space Grotesk';font-size:24px;font-weight:700">14</div><div style="font-size:11px;color:#9cb3a6">Visitors</div></div>
+                    <div style="width:1px;background:rgba(255,255,255,.1)"></div>
+                    <div><div style="font-family:'Space Grotesk';font-size:24px;font-weight:700;color:#34e08a">2</div><div style="font-size:11px;color:#9cb3a6">At gate</div></div>
+                    <div style="width:1px;background:rgba(255,255,255,.1)"></div>
+                    <div><div style="font-family:'Space Grotesk';font-size:24px;font-weight:700;color:#ffb84d">3</div><div style="font-size:11px;color:#9cb3a6">Open issues</div></div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+                <button onClick="{{ goVisitors }}" style="text-align:left;background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;cursor:pointer;color:#e9f1ec">
+                  <span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">qr_code_2</span>
+                  <div style="font-size:13px;font-weight:600;margin-top:8px">New invite</div>
+                </button>
+                <button onClick="{{ goDues }}" style="text-align:left;background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;cursor:pointer;color:#e9f1ec">
+                  <span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">account_balance_wallet</span>
+                  <div style="font-size:13px;font-weight:600;margin-top:8px">Pay dues</div>
+                </button>
+                <button onClick="{{ goIssues }}" style="text-align:left;background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;cursor:pointer;color:#e9f1ec">
+                  <span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">forum</span>
+                  <div style="font-size:13px;font-weight:600;margin-top:8px">Log issue</div>
+                </button>
+                <button onClick="{{ openPanic }}" style="text-align:left;background:#2a1414;border:1px solid rgba(255,93,93,.3);border-radius:14px;padding:13px;cursor:pointer;color:#ffd5d5;animation:hkpulse 2.4s ease-in-out infinite">
+                  <span style="font-family:'Material Symbols Rounded';font-size:24px;color:#ff5d5d">sos</span>
+                  <div style="font-size:13px;font-weight:600;margin-top:8px">Panic alert</div>
+                </button>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+                <span style="font-size:13px;font-weight:600">Live at the gate</span>
+                <span onClick="{{ goGate }}" style="font-size:12px;color:#34e08a;cursor:pointer">View all</span>
+              </div>
+              <sc-if value="{{ hasPreview }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;margin-bottom:18px">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px">
+                    <div style="width:34px;height:34px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9cb3a6">person</span></div>
+                    <div style="flex:1"><div style="font-size:13px;font-weight:600">{{ preview.name }}</div><div style="font-size:11px;color:#8da093">{{ preview.host }} · {{ preview.time }}</div></div>
+                    <span style="font-size:10px;font-weight:600;color:#ffb84d;background:rgba(255,184,77,.12);padding:3px 7px;border-radius:6px">PENDING</span>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <button onClick="{{ preview.allow }}" style="flex:1;background:#34e08a;color:#06140d;border:none;border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer">Allow in</button>
+                    <button onClick="{{ preview.deny }}" style="flex:1;background:transparent;color:#ff8a8a;border:1px solid rgba(255,93,93,.3);border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer">Deny</button>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ noPreview }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#13211a;border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;margin-bottom:18px;color:#8da093;font-size:13px">Gate is clear. No one waiting.</div>
+              </sc-if>
+
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Recent activity</div>
+              <sc-for list="{{ activity }}" as="a" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+                  <div style="width:32px;height:32px;border-radius:9px;background:#16271e;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:18px;color:#7ff0b6">{{ a.icon }}</span></div>
+                  <div style="flex:1"><div style="font-size:13px">{{ a.text }}</div><div style="font-size:11px;color:#8da093">{{ a.sub }}</div></div>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- VISITORS -->
+            <sc-if value="{{ isVisitors }}" hint-placeholder-val="{{ true }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Invitations</div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px;margin-bottom:18px">
+                <div style="font-size:12px;color:#8da093;margin-bottom:8px">Guest or vendor name</div>
+                <input value="{{ inviteName }}" onInput="{{ setInviteName }}" placeholder="e.g. Adebayo Group" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px">
+                <div style="display:flex;gap:8px;margin-bottom:14px">
+                  <button onClick="{{ setSingle }}" style="flex:1;padding:9px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;border:1px solid {{ singleBorder }};background:{{ singleBg }};color:{{ singleColor }}">Single use</button>
+                  <button onClick="{{ setMulti }}" style="flex:1;padding:9px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;border:1px solid {{ multiBorder }};background:{{ multiBg }};color:{{ multiColor }}">Multi use</button>
+                </div>
+                <button onClick="{{ createInvite }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:12px;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font-family:'Material Symbols Rounded';font-size:19px">qr_code_2</span>Generate code</button>
+              </div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Active invitations</div>
+              <sc-for list="{{ invites }}" as="iv" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:11px;background:#13211a;border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:12px;margin-bottom:9px">
+                  <div style="width:36px;height:36px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#7ff0b6">confirmation_number</span></div>
+                  <div style="flex:1"><div style="font-size:13px;font-weight:600">{{ iv.name }}</div><div style="font-size:11px;color:#8da093">{{ iv.typeLabel }} · {{ iv.when }}</div></div>
+                  <span style="font-family:'Space Grotesk';font-size:13px;font-weight:600;color:#34e08a;letter-spacing:.04em">{{ iv.code }}</span>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- GATE -->
+            <sc-if value="{{ isGate }}" hint-placeholder-val="{{ true }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 4px">Gate control</div>
+              <div style="font-size:12px;color:#8da093;margin-bottom:14px;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:#34e08a;display:inline-block"></span>Main Entrance · live</div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Waiting for approval</div>
+              <sc-if value="{{ hasPending }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ pending }}" as="g" hint-placeholder-count="2">
+                  <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px;margin-bottom:10px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px">
+                      <div style="width:34px;height:34px;border-radius:10px;background:#1e3327;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#9cb3a6">person</span></div>
+                      <div style="flex:1"><div style="font-size:13px;font-weight:600">{{ g.name }}</div><div style="font-size:11px;color:#8da093">{{ g.host }} · {{ g.time }}</div></div>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                      <button onClick="{{ g.allow }}" style="flex:1;background:#34e08a;color:#06140d;border:none;border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer">Allow in</button>
+                      <button onClick="{{ g.deny }}" style="flex:1;background:transparent;color:#ff8a8a;border:1px solid rgba(255,93,93,.3);border-radius:10px;padding:9px;font-weight:600;font-size:13px;cursor:pointer">Deny</button>
+                    </div>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ noPending }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#13211a;border:1px dashed rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;margin-bottom:8px;color:#8da093;font-size:13px">All clear. No one is waiting at the gate.</div>
+              </sc-if>
+              <div style="font-size:13px;font-weight:600;margin:16px 0 9px">Access log</div>
+              <sc-for list="{{ gateLog }}" as="l" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+                  <div style="width:30px;height:30px;border-radius:9px;background:{{ l.bg }};display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:17px;color:{{ l.color }}">{{ l.icon }}</span></div>
+                  <div style="flex:1"><div style="font-size:13px">{{ l.name }}</div><div style="font-size:11px;color:#8da093">{{ l.dirLabel }}</div></div>
+                  <span style="font-size:11px;color:#8da093">{{ l.time }}</span>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- DUES -->
+            <sc-if value="{{ isDues }}" hint-placeholder-val="{{ true }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Facility dues</div>
+              <sc-if value="{{ notPaid }}" hint-placeholder-val="{{ true }}">
+                <div style="background:linear-gradient(150deg,#123a28,#0d2a1d);border:1px solid rgba(52,224,138,.2);border-radius:18px;padding:18px;margin-bottom:16px">
+                  <div style="font-size:12px;color:#8fd9b3;margin-bottom:6px">OUTSTANDING BALANCE</div>
+                  <div style="font-family:'Space Grotesk';font-size:34px;font-weight:700">{{ balanceLabel }}</div>
+                  <div style="font-size:12px;color:#9cb3a6;margin-bottom:16px">Due 30 June 2026</div>
+                  <button onClick="{{ payDues }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:13px;font-weight:600;font-size:14px;cursor:pointer">Pay now</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ paid }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#123a28;border:1px solid rgba(52,224,138,.3);border-radius:18px;padding:24px 18px;margin-bottom:16px;text-align:center">
+                  <div style="width:54px;height:54px;border-radius:50%;background:#34e08a;display:grid;place-items:center;margin:0 auto 12px"><span style="font-family:'Material Symbols Rounded';font-size:30px;color:#06140d">check</span></div>
+                  <div style="font-family:'Space Grotesk';font-size:18px;font-weight:600">Dues fully paid</div>
+                  <div style="font-size:12px;color:#9cb3a6;margin-top:4px">Receipt sent to your email</div>
+                </div>
+              </sc-if>
+              <div style="font-size:13px;font-weight:600;margin-bottom:9px">Breakdown</div>
+              <sc-for list="{{ dueItems }}" as="d" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+                  <span style="font-size:13px;color:#cfe0d6">{{ d.label }}</span>
+                  <span style="font-size:13px;font-weight:600">{{ d.amt }}</span>
+                </div>
+              </sc-for>
+            </sc-if>
+
+            <!-- ISSUES -->
+            <sc-if value="{{ isIssues }}" hint-placeholder-val="{{ true }}">
+              <div style="font-family:'Space Grotesk';font-size:20px;font-weight:600;margin:2px 0 14px">Complaints</div>
+              <div style="background:#13211a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px;margin-bottom:18px">
+                <div style="font-size:12px;color:#8da093;margin-bottom:8px">Describe the issue</div>
+                <textarea value="{{ complaintText }}" onInput="{{ setComplaint }}" placeholder="e.g. Street light out on Block B walkway" style="width:100%;height:74px;resize:none;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px"></textarea>
+                <button onClick="{{ addComplaint }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:12px;font-weight:600;font-size:14px;cursor:pointer">Submit complaint</button>
+              </div>
+              <sc-for list="{{ complaints }}" as="c" hint-placeholder-count="2">
+                <div style="background:#13211a;border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:13px;margin-bottom:9px">
+                  <div style="display:flex;align-items:start;justify-content:space-between;gap:10px">
+                    <div style="font-size:13px;font-weight:500;flex:1">{{ c.title }}</div>
+                    <span style="font-size:10px;font-weight:600;color:{{ c.color }};background:{{ c.bg }};padding:3px 8px;border-radius:6px;white-space:nowrap">{{ c.status }}</span>
+                  </div>
+                  <div style="font-size:11px;color:#8da093;margin-top:6px">{{ c.time }}</div>
+                </div>
+              </sc-for>
+            </sc-if>
+
+          </div>
+
+          <!-- bottom nav -->
+          <div style="position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:9px 8px 14px;background:rgba(8,18,14,.92);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.06)">
+            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+              <button onClick="{{ n.onClick }}" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ n.color }};font-family:inherit;padding:2px 6px">
+                <span style="font-family:'Material Symbols Rounded';font-size:23px;font-variation-settings:'FILL' {{ n.fill }}">{{ n.icon }}</span>
+                <span style="font-size:10px;font-weight:500">{{ n.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <!-- PANIC overlay -->
+          <sc-if value="{{ panicOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:rgba(6,12,9,.92);backdrop-filter:blur(6px);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center">
+              <button onClick="{{ closePanic }}" style="position:absolute;top:16px;right:16px;background:#16271e;border:1px solid rgba(255,255,255,.1);width:34px;height:34px;border-radius:50%;cursor:pointer;color:#aebcb3;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:20px">close</span></button>
+              <div style="font-family:'Space Grotesk';font-size:21px;font-weight:600;margin-bottom:6px">{{ panicTitle }}</div>
+              <div style="font-size:13px;color:#aebcb3;margin-bottom:30px;max-width:220px">{{ panicSub }}</div>
+              {{ panicDial }}
+            </div>
+          </sc-if>
+
+          <!-- toast -->
+          <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;bottom:84px;left:50%;transform:translateX(-50%);background:#1d3327;border:1px solid rgba(52,224,138,.3);color:#cdebd9;font-size:13px;font-weight:500;padding:10px 16px;border-radius:11px;white-space:nowrap;z-index:25;animation:hktoast .25s ease;display:flex;align-items:center;gap:8px">
+              <span style="font-family:'Material Symbols Rounded';font-size:18px;color:#34e08a">check_circle</span>{{ toast }}
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section style="border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:#0a140f">
+    <div style="max-width:1180px;margin:0 auto;padding:34px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center">
+      <div><div style="font-family:'Space Grotesk';font-size:32px;font-weight:700;color:#34e08a">60%</div><div style="font-size:13px;color:#9cb3a6;margin-top:4px">More efficient gate security</div></div>
+      <div><div style="font-family:'Space Grotesk';font-size:32px;font-weight:700;color:#34e08a">70%</div><div style="font-size:13px;color:#9cb3a6;margin-top:4px">Faster emergency response</div></div>
+      <div><div style="font-family:'Space Grotesk';font-size:32px;font-weight:700;color:#34e08a">₦0</div><div style="font-size:13px;color:#9cb3a6;margin-top:4px">Hardware to install</div></div>
+      <div><div style="font-family:'Space Grotesk';font-size:32px;font-weight:700;color:#34e08a">24/7</div><div style="font-size:13px;color:#9cb3a6;margin-top:4px">Community safety</div></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" style="max-width:1180px;margin:0 auto;padding:80px 28px 40px;scroll-margin-top:80px">
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="font-size:13px;font-weight:600;color:#34e08a;letter-spacing:.08em;margin-bottom:10px">FEATURES</div>
+      <h2 style="font-family:'Space Grotesk';font-size:40px;font-weight:700;letter-spacing:-.02em;margin:0">What Homekeep handles</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+        <div style="background:#0f1c15;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:26px">
+          <div style="width:46px;height:46px;border-radius:13px;background:{{ f.iconBg }};display:grid;place-items:center;margin-bottom:16px"><span style="font-family:'Material Symbols Rounded';font-size:26px;color:{{ f.iconColor }}">{{ f.icon }}</span></div>
+          <div style="font-size:11px;font-weight:600;color:#7f968a;letter-spacing:.06em;margin-bottom:7px">{{ f.tag }}</div>
+          <div style="font-family:'Space Grotesk';font-size:19px;font-weight:600;margin-bottom:8px">{{ f.title }}</div>
+          <div style="font-size:14px;line-height:1.55;color:#9cb3a6">{{ f.body }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why" style="max-width:1180px;margin:0 auto;padding:50px 28px 40px;scroll-margin-top:80px">
+    <div style="display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#34e08a;letter-spacing:.08em;margin-bottom:10px">WHY CHOOSE US</div>
+        <h2 style="font-family:'Space Grotesk';font-size:36px;font-weight:700;letter-spacing:-.02em;margin:0 0 14px">Built for the<br>people who run it.</h2>
+        <p style="font-size:16px;line-height:1.6;color:#9cb3a6;margin:0">Homekeep takes the manual work out of running an estate, from gate logs to levy chasing to complaint tracking, so it stays in one place.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ whyItems }}" as="w" hint-placeholder-count="3">
+          <div style="display:flex;gap:16px;background:#0f1c15;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(52,224,138,.12);display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a">{{ w.icon }}</span></div>
+            <div><div style="font-family:'Space Grotesk';font-size:18px;font-weight:600;margin-bottom:5px">{{ w.title }}</div><div style="font-size:14px;line-height:1.55;color:#9cb3a6">{{ w.body }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="max-width:760px;margin:0 auto;padding:70px 28px 40px;scroll-margin-top:80px">
+    <div style="text-align:center;margin-bottom:40px">
+      <div style="font-size:13px;font-weight:600;color:#34e08a;letter-spacing:.08em;margin-bottom:10px">FAQ</div>
+      <h2 style="font-family:'Space Grotesk';font-size:36px;font-weight:700;letter-spacing:-.02em;margin:0">Questions, answered</h2>
+    </div>
+    <sc-for list="{{ faqItems }}" as="q" hint-placeholder-count="4">
+      <div style="border:1px solid rgba(255,255,255,.08);border-radius:14px;margin-bottom:11px;overflow:hidden;background:#0f1c15">
+        <button onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;background:none;border:none;cursor:pointer;color:#e9f1ec;text-align:left;font-family:inherit">
+          <span style="font-family:'Space Grotesk';font-size:16px;font-weight:600">{{ q.q }}</span>
+          <span style="font-family:'Material Symbols Rounded';font-size:24px;color:#34e08a;transform:rotate({{ q.rotate }});transition:transform .2s">expand_more</span>
+        </button>
+        <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 20px 18px;font-size:14px;line-height:1.6;color:#9cb3a6">{{ q.a }}</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </section>
+
+  <!-- WAITLIST -->
+  <section id="waitlist" style="max-width:1180px;margin:0 auto;padding:40px 28px;scroll-margin-top:80px">
+    <div style="position:relative;overflow:hidden;background:linear-gradient(150deg,#123a28,#0c2118);border:1px solid rgba(52,224,138,.22);border-radius:24px;padding:54px 40px;text-align:center">
+      <div style="position:absolute;top:-60px;right:-40px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#1d7048,transparent 70%);filter:blur(20px);opacity:.5"></div>
+      <div style="position:relative">
+        <h2 style="font-family:'Space Grotesk';font-size:34px;font-weight:700;letter-spacing:-.02em;margin:0 0 10px">Join the waitlist</h2>
+        <p style="font-size:16px;color:#bcd3c6;margin:0 0 26px">Be the first to know when Homekeep launches in your estate.</p>
+        <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:10px;max-width:440px;margin:0 auto">
+            <input value="{{ waitEmail }}" onInput="{{ setWait }}" placeholder="Enter your email address" style="flex:1;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px;color:#fff;font-size:15px;font-family:inherit;outline:none">
+            <button onClick="{{ joinWait }}" style="background:#34e08a;color:#06140d;border:none;border-radius:12px;padding:14px 22px;font-weight:600;font-size:15px;cursor:pointer;white-space:nowrap">Join now</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ joined }}" hint-placeholder-val="{{ false }}">
+          <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,.25);border:1px solid rgba(52,224,138,.4);border-radius:12px;padding:14px 22px;color:#cdebd9;font-weight:500"><span style="font-family:'Material Symbols Rounded';font-size:22px;color:#34e08a">check_circle</span>You're on the list. We'll be in touch.</div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="max-width:1180px;margin:0 auto;padding:50px 28px 60px">
+    <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:48px">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#34e08a;letter-spacing:.08em;margin-bottom:10px">GET IN TOUCH</div>
+        <h2 style="font-family:'Space Grotesk';font-size:34px;font-weight:700;letter-spacing:-.02em;margin:0 0 14px">Talk to our team</h2>
+        <p style="font-size:16px;line-height:1.6;color:#9cb3a6;margin:0 0 24px">Drop a message and we'll respond shortly to help you bring Homekeep to your community.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:12px;color:#cfe0d6;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#34e08a">mail</span>hello@homekeep.ng</div>
+          <div style="display:flex;align-items:center;gap:12px;color:#cfe0d6;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#34e08a">call</span>+234 800 000 0000</div>
+          <div style="display:flex;align-items:center;gap:12px;color:#cfe0d6;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:21px;color:#34e08a">location_on</span>Lagos, Nigeria</div>
+        </div>
+      </div>
+      <div style="background:#0f1c15;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:24px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <input placeholder="Name" style="background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none">
+          <input placeholder="Email" style="background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none">
+        </div>
+        <input placeholder="Subject" style="width:100%;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px">
+        <textarea placeholder="Message" style="width:100%;height:110px;resize:none;background:#0c1813;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;color:#e9f1ec;font-size:14px;font-family:inherit;outline:none;margin-bottom:14px"></textarea>
+        <button onClick="{{ sendContact }}" style="width:100%;background:#34e08a;color:#06140d;border:none;border-radius:11px;padding:13px;font-weight:600;font-size:15px;cursor:pointer">{{ contactLabel }}</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(255,255,255,.06);background:#0a140f">
+    <div style="max-width:1180px;margin:0 auto;padding:40px 28px;display:flex;justify-content:space-between;align-items:start;gap:40px;flex-wrap:wrap">
+      <div style="max-width:340px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:30px;height:30px;border-radius:8px;background:#34e08a;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:19px;color:#06140d">cottage</span></div>
+          <span style="font-family:'Space Grotesk';font-weight:700;font-size:18px">Homekeep</span>
+        </div>
+        <p style="font-size:13px;line-height:1.6;color:#7f968a;margin:0">Cloud-based security and housing society management that keeps your community better managed and strongly connected.</p>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#demo" style="display:flex;align-items:center;gap:9px;background:#101c16;border:1px solid rgba(255,255,255,.1);padding:9px 15px;border-radius:11px;text-decoration:none;color:#e9f1ec"><span style="font-family:'Material Symbols Rounded';font-size:22px;color:#34e08a">android</span><span style="line-height:1.1"><span style="font-size:10px;color:#8da093;display:block">GET IT ON</span><span style="font-size:14px;font-weight:600;font-family:'Space Grotesk'">Google Play</span></span></a>
+        <a href="#demo" style="display:flex;align-items:center;gap:9px;background:#101c16;border:1px solid rgba(255,255,255,.1);padding:9px 15px;border-radius:11px;text-decoration:none;color:#e9f1ec"><span style="font-family:'Material Symbols Rounded';font-size:22px;color:#34e08a">ios_share</span><span style="line-height:1.1"><span style="font-size:10px;color:#8da093;display:block">Download on the</span><span style="font-size:14px;font-weight:600;font-family:'Space Grotesk'">App Store</span></span></a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.06);padding:18px 28px;text-align:center;font-size:12px;color:#6f8579">© 2026 Homekeep. All rights reserved.</div>
+  </footer>
+
+</div>
+
+<template id="__bundler_thumbnail" data-bg-color="#081210">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#081210"/>
+    <rect x="500" y="300" width="200" height="200" rx="56" fill="#34e08a"/>
+    <path d="M600 360 L660 410 L660 462 L540 462 L540 410 Z" fill="#06140d"/>
+    <rect x="574" y="432" width="52" height="30" fill="#34e08a"/>
+  </svg>
+</template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;visitors&quot;,&quot;gate&quot;,&quot;dues&quot;,&quot;issues&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showStoreBadges&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen: null,
+    inviteName: '', inviteType: 'single',
+    invites: [
+      { name: 'Adebayo Group', type: 'multi', code: 'PK-7QX2', when: 'Today, 2:30 PM' },
+      { name: 'DHL Courier', type: 'single', code: 'PK-4MN8', when: 'Today, 11:05 AM' },
+    ],
+    gate: [
+      { id: 1, name: 'Chinedu Okafor', host: 'Block C · Flat 4', time: 'just now', status: 'pending' },
+      { id: 2, name: 'Glovo Rider', host: 'Block A · Flat 12', time: '2 min ago', status: 'pending' },
+    ],
+    balance: 145000, paid: false,
+    complaints: [
+      { title: 'Street light out on Block B walkway', status: 'In progress', time: 'Yesterday, 6:40 PM' },
+      { title: 'Refuse not collected on Crescent 2', status: 'Resolved', time: '2 days ago' },
+    ],
+    complaintText: '',
+    panicOpen: false, panic: 'idle', panicPct: 0,
+    waitEmail: '', waitDone: false,
+    contactSent: false,
+    faqOpen: 0,
+    toast: null,
+  };
+
+  go = (s) => this.setState({ screen: s, panicOpen: false });
+
+  flash = (msg) => {
+    this.setState({ toast: msg });
+    clearTimeout(this._toast);
+    this._toast = setTimeout(() => this.setState({ toast: null }), 2400);
+  };
+
+  setInviteName = (e) => this.setState({ inviteName: e.target.value });
+  setSingle = () => this.setState({ inviteType: 'single' });
+  setMulti = () => this.setState({ inviteType: 'multi' });
+  createInvite = () => {
+    const name = (this.state.inviteName || '').trim() || 'Guest';
+    const code = 'PK-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+    const inv = { name, type: this.state.inviteType, code, when: 'Just now' };
+    this.setState((s) => ({ invites: [inv, ...s.invites], inviteName: '' }));
+    this.flash('Invitation ' + code + ' created');
+  };
+
+  allow = (id) => {
+    this.setState((s) => ({ gate: s.gate.filter((g) => g.id !== id) }));
+    this.flash('Visitor allowed in');
+  };
+  deny = (id) => {
+    this.setState((s) => ({ gate: s.gate.filter((g) => g.id !== id) }));
+    this.flash('Visitor denied');
+  };
+
+  payDues = () => { this.setState({ balance: 0, paid: true }); this.flash('Dues paid · ₦145,000'); };
+
+  setComplaint = (e) => this.setState({ complaintText: e.target.value });
+  addComplaint = () => {
+    const t = (this.state.complaintText || '').trim();
+    if (!t) return;
+    this.setState((s) => ({ complaints: [{ title: t, status: 'Open', time: 'Just now' }, ...s.complaints], complaintText: '' }));
+    this.flash('Complaint submitted');
+  };
+
+  openPanic = () => this.setState({ panicOpen: true });
+  closePanic = () => { clearInterval(this._t); this.setState({ panicOpen: false, panic: 'idle', panicPct: 0 }); };
+  startPanic = () => {
+    if (this.state.panic !== 'idle') return;
+    this.setState({ panic: 'arming' });
+    this._t = setInterval(() => {
+      this.setState((s) => {
+        const p = Math.min(100, s.panicPct + 5);
+        if (p >= 100) { clearInterval(this._t); return { panicPct: 100, panic: 'sent' }; }
+        return { panicPct: p };
+      });
+    }, 32);
+  };
+  cancelPanic = () => {
+    if (this.state.panic === 'arming') { clearInterval(this._t); this.setState({ panic: 'idle', panicPct: 0 }); }
+  };
+
+  setWait = (e) => this.setState({ waitEmail: e.target.value });
+  joinWait = () => {
+    if (!(this.state.waitEmail || '').includes('@')) { this.flash('Enter a valid email'); return; }
+    this.setState({ waitDone: true });
+  };
+
+  sendContact = () => { this.setState({ contactSent: true }); this.flash('Message sent. We\'ll reply shortly'); };
+
+  toggleFaq = (i) => this.setState((s) => ({ faqOpen: s.faqOpen === i ? -1 : i }));
+
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._toast); }
+
+  renderVals() {
+    const screen = this.state.screen || this.props.defaultScreen || 'home';
+    const accentFill = (k) => (screen === k ? 1 : 0);
+    const navDef = [
+      { key: 'home', label: 'Home', icon: 'home' },
+      { key: 'visitors', label: 'Visitors', icon: 'group' },
+      { key: 'gate', label: 'Gate', icon: 'shield' },
+      { key: 'dues', label: 'Dues', icon: 'account_balance_wallet' },
+      { key: 'issues', label: 'Issues', icon: 'forum' },
+    ];
+    const navItems = navDef.map((n) => ({
+      ...n, active: screen === n.key,
+      color: screen === n.key ? '#34e08a' : '#6f8579',
+      fill: screen === n.key ? 1 : 0,
+      onClick: () => this.go(n.key),
+    }));
+
+    const pending = this.state.gate.filter((g) => g.status === 'pending').map((g) => ({
+      ...g, allow: () => this.allow(g.id), deny: () => this.deny(g.id),
+    }));
+    const preview = pending[0] || null;
+
+    const invites = this.state.invites.map((iv) => ({
+      ...iv, typeLabel: iv.type === 'multi' ? 'Multi-use' : 'Single-use',
+    }));
+
+    const gateLog = [
+      { name: 'Mrs. Bello', dir: 'in', time: '1:12 PM' },
+      { name: 'Uche (Flat 9)', dir: 'out', time: '12:55 PM' },
+      { name: 'Water vendor', dir: 'in', time: '12:30 PM' },
+      { name: 'Mr. Danjuma', dir: 'out', time: '11:48 AM' },
+    ].map((l) => ({
+      ...l,
+      dirLabel: l.dir === 'in' ? 'Entered · Main gate' : 'Exited · Main gate',
+      icon: l.dir === 'in' ? 'login' : 'logout',
+      color: l.dir === 'in' ? '#7ff0b6' : '#9cb3a6',
+      bg: l.dir === 'in' ? '#16271e' : '#1a2520',
+    }));
+
+    const statusStyle = (s) => {
+      if (s === 'Resolved') return { color: '#34e08a', bg: 'rgba(52,224,138,.12)' };
+      if (s === 'In progress') return { color: '#ffb84d', bg: 'rgba(255,184,77,.12)' };
+      return { color: '#7fb4ff', bg: 'rgba(127,180,255,.12)' };
+    };
+    const complaints = this.state.complaints.map((c) => ({ ...c, ...statusStyle(c.status) }));
+
+    const seg = (on) => on
+      ? { singleBorder: 'rgba(52,224,138,.4)', singleBg: 'rgba(52,224,138,.14)', singleColor: '#34e08a' }
+      : { singleBorder: 'rgba(255,255,255,.1)', singleBg: 'transparent', singleColor: '#9cb3a6' };
+    const single = this.state.inviteType === 'single';
+    const s1 = seg(single), s2 = seg(!single);
+
+    const panicSent = this.state.panic === 'sent';
+    const pct = this.state.panicPct;
+    const panicDial = React.createElement('div', {
+      onMouseDown: this.startPanic, onMouseUp: this.cancelPanic, onMouseLeave: this.cancelPanic,
+      onTouchStart: this.startPanic, onTouchEnd: this.cancelPanic,
+      style: {
+        width: 188, height: 188, borderRadius: '50%', cursor: panicSent ? 'default' : 'pointer',
+        userSelect: 'none', WebkitTapHighlightColor: 'transparent',
+        background: `conic-gradient(${panicSent ? '#34e08a' : '#ff5d5d'} ${pct * 3.6}deg, rgba(255,93,93,.15) 0deg)`,
+        display: 'grid', placeItems: 'center', transition: 'background .05s linear',
+      },
+    }, React.createElement('div', {
+      style: {
+        width: 152, height: 152, borderRadius: '50%',
+        background: panicSent ? '#10271b' : '#2a1414',
+        border: `1px solid ${panicSent ? 'rgba(52,224,138,.45)' : 'rgba(255,93,93,.4)'}`,
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 7,
+      },
+    },
+      React.createElement('span', { style: { fontFamily: "'Material Symbols Rounded'", fontSize: 48, color: panicSent ? '#34e08a' : '#ff5d5d' } }, panicSent ? 'check' : 'sos'),
+      React.createElement('span', { style: { fontSize: 13, fontWeight: 600, color: panicSent ? '#34e08a' : '#ff9a9a' } }, panicSent ? 'Alert sent' : (pct > 0 ? 'Hold…' : 'Hold')),
+    ));
+
+    const features = [
+      { tag: 'INVITATIONS', icon: 'qr_code_2', title: 'Invitations made easy', body: 'Create single-use or multi-use entry codes and share them with guests in seconds.', iconBg: 'rgba(52,224,138,.12)', iconColor: '#34e08a' },
+      { tag: 'SECURITY', icon: 'shield', title: 'Enhanced gate security', body: 'Monitor everyone entering and leaving your estate, with a full digital access log.', iconBg: 'rgba(52,224,138,.12)', iconColor: '#34e08a' },
+      { tag: 'PANIC ALARM', icon: 'sos', title: 'Instant panic alert', body: 'One tap notifies your security officers, cutting emergency response time by 70%.', iconBg: 'rgba(255,93,93,.12)', iconColor: '#ff7a7a' },
+      { tag: 'PAYMENTS', icon: 'account_balance_wallet', title: 'Simple facility dues', body: 'Collect levies and fees in-app, with automatic receipts and clear breakdowns.', iconBg: 'rgba(52,224,138,.12)', iconColor: '#34e08a' },
+      { tag: 'COMPLAINTS', icon: 'forum', title: 'Streamlined complaints', body: 'Residents lodge issues directly to management and track them to resolution.', iconBg: 'rgba(52,224,138,.12)', iconColor: '#34e08a' },
+      { tag: 'POLLS', icon: 'how_to_vote', title: 'Community decisions', body: 'Run transparent opinion polls so every resident\'s voice counts on what matters.', iconBg: 'rgba(52,224,138,.12)', iconColor: '#34e08a' },
+    ];
+
+    const whyItems = [
+      { icon: 'bolt', title: 'Easy to use', body: 'Technology-enabled security that makes gatehouse guards up to 60% more effective, with no training headaches.' },
+      { icon: 'monitoring', title: 'Monitor & manage', body: 'Equip every guard with the gatekeeper app for unmatched oversight. Data privacy guaranteed.' },
+      { icon: 'sync', title: 'Always improving', body: 'Frequent updates keep Homekeep at global industry standards, at no additional cost to you.' },
+    ];
+
+    const faqDef = [
+      { q: 'What is Homekeep?', a: 'Homekeep is a cloud-based security and housing-society management platform with a vision to make your community better managed and strongly connected, with no hardware to buy.' },
+      { q: 'How do I roll it out in my estate?', a: 'Invite your residents and gatekeepers by email or phone number. They download the app, you approve them, and your estate is live the same day.' },
+      { q: 'Does it work without internet at the gate?', a: 'Gatekeepers can verify invitation codes offline; all entries sync automatically once back online.' },
+      { q: 'Is resident data secure?', a: 'Everything is encrypted in transit and at rest, and residents stay in control of who can see their visitor history.' },
+    ].map((f, i) => ({
+      ...f, open: this.state.faqOpen === i, rotate: this.state.faqOpen === i ? '180deg' : '0deg',
+      toggle: () => this.toggleFaq(i),
+    }));
+
+    const activity = [
+      { icon: 'login', text: 'Mrs. Bello entered', sub: 'Main gate · 1:12 PM' },
+      { icon: 'payments', text: 'Dues paid by Flat 12', sub: '₦45,000 · 12:40 PM' },
+      { icon: 'qr_code_2', text: 'Invite code used', sub: 'DHL Courier · 11:05 AM' },
+    ];
+
+    return {
+      navItems,
+      isHome: screen === 'home', isVisitors: screen === 'visitors', isGate: screen === 'gate',
+      isDues: screen === 'dues', isIssues: screen === 'issues',
+      goVisitors: () => this.go('visitors'), goDues: () => this.go('dues'),
+      goIssues: () => this.go('issues'), goGate: () => this.go('gate'),
+      openPanic: this.openPanic,
+      showStats: this.props.showStats ?? true,
+      storeBadges: this.props.showStoreBadges ?? true,
+
+      preview, hasPreview: !!preview, noPreview: !preview, activity,
+
+      inviteName: this.state.inviteName, setInviteName: this.setInviteName,
+      setSingle: this.setSingle, setMulti: this.setMulti, createInvite: this.createInvite, invites,
+      singleBorder: s1.singleBorder, singleBg: s1.singleBg, singleColor: s1.singleColor,
+      multiBorder: s2.singleBorder, multiBg: s2.singleBg, multiColor: s2.singleColor,
+
+      pending, hasPending: pending.length > 0, noPending: pending.length === 0, gateLog,
+
+      balanceLabel: '₦' + this.state.balance.toLocaleString(), paid: this.state.paid, notPaid: !this.state.paid,
+      payDues: this.payDues,
+      dueItems: [
+        { label: 'Security levy', amt: '₦60,000' },
+        { label: 'Waste management', amt: '₦25,000' },
+        { label: 'Estate maintenance', amt: '₦45,000' },
+        { label: 'Generator diesel', amt: '₦15,000' },
+      ],
+
+      complaintText: this.state.complaintText, setComplaint: this.setComplaint, addComplaint: this.addComplaint, complaints,
+
+      panicOpen: this.state.panicOpen, closePanic: this.closePanic, panicDial,
+      panicTitle: panicSent ? 'Security alerted' : 'Emergency alert',
+      panicSub: panicSent ? 'Officers have been notified and are on their way to your location.' : 'Press and hold the button to alert estate security to your location.',
+
+      features, whyItems, faqItems: faqDef,
+
+      waitEmail: this.state.waitEmail, setWait: this.setWait, joinWait: this.joinWait,
+      notJoined: !this.state.waitDone, joined: this.state.waitDone,
+
+      sendContact: this.sendContact, contactLabel: this.state.contactSent ? 'Message sent ✓' : 'Send message',
+
+      toast: this.state.toast, hasToast: !!this.state.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>
